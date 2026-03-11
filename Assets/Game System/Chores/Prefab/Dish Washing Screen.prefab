@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dishWashingAnimation: {fileID: 2932636109104049917}
-  content: {fileID: 1137114160521840334}
+  content: {fileID: 3379627665601538740}
   plateParent: {fileID: 292398015411213523}
   plateAmountText: {fileID: 1041488477649206295}
   nextPlateButton: {fileID: 3629910812376118927}
@@ -706,7 +706,7 @@ MonoBehaviour:
   pressedTexture: {fileID: 21300000, guid: fa828f88930347d47a239ec6ec79e97c, type: 3}
   normalContentOffset: {x: 0, y: 0}
   hoverContentOffset: {x: 0, y: 0}
-  pressedContentOffset: {x: 0, y: 0}
+  pressedContentOffset: {x: 0, y: -6}
 --- !u!1 &7079553485081077136
 GameObject:
   m_ObjectHideFlags: 0

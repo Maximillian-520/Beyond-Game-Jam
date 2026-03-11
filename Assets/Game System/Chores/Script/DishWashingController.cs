@@ -9,7 +9,7 @@ public class DishWashingController : MonoBehaviour
 
     [Header("Component and Object")]
     [SerializeField] private DishWashingAnimation dishWashingAnimation;
-    [SerializeField] private RectTransform content;
+    [SerializeField] private GameObject content;
     [SerializeField] private RectTransform plateParent;
     [SerializeField] private TextMeshProUGUI plateAmountText;
     [SerializeField] private Button nextPlateButton;
@@ -45,7 +45,7 @@ public class DishWashingController : MonoBehaviour
         };
         dishWashingAnimation.OnScreenDisappearFinished += (object sender, EventArgs e) =>
         {
-            content.gameObject.SetActive(false);
+            content.SetActive(false);
             OnMinigameEnded.Invoke(this, EventArgs.Empty);
         };
         dishWashingAnimation.OnPlateAppearFinished += (object sender, EventArgs e) =>
@@ -67,7 +67,7 @@ public class DishWashingController : MonoBehaviour
             if (currentPlateAmount >= gamePlateAmount) EndMinigame();
         };
         // Initialize
-        content.gameObject.SetActive(false);
+        content.SetActive(false);
     }
     #endregion
 
@@ -78,7 +78,7 @@ public class DishWashingController : MonoBehaviour
     public void StartMinigame()
     {
         // Set active
-        content.gameObject.SetActive(true);
+        content.SetActive(true);
         // Setup minigame
         previousPlate = null;
         currentPlate = null;

@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // [SerializeField] private Player player;
-    // [SerializeField] private Enemy enemy;
+    [SerializeField] private Player player;
     [SerializeField] private DishWashingController dishWashingController;
     [SerializeField] private GameTimer gameTimer;
-    // [SerializeField] private GameoverScreenController gameoverScreenController;
+    [SerializeField] private GameoverScreenController gameoverScreenController;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -16,18 +15,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // Assertion check
-        // Debug.Assert(player, "player is missing");
-        // Debug.Assert(enemy, "enemy is missing");
+        Debug.Assert(player, "player is missing");
         Debug.Assert(dishWashingController, "dishWashingController is missing");
         Debug.Assert(gameTimer, "gameTimer is missing");
-        // Debug.Assert(gameoverScreenController, "gameoverScreenController is missing");
+        Debug.Assert(gameoverScreenController, "gameoverScreenController is missing");
         // Connect events
-        // player.OnPlayerDied += (object sender, EventArgs e) => {EndGame(false);};
-        // enemy.OnEnemyDied += (object sender, EventArgs e) => {EndGame(true);};
-        // dishWashingController.OnMinigameEnded += (object sender, EventArgs e) => {StartBattlePhase();};
-        // gameTimer.OnBattleTimerFinished += (object sender, EventArgs e) => {StartChoresPhase();};
+        player.OnPlayerDied += (object sender, EventArgs e) => {EndGame(false);};
+        dishWashingController.OnMinigameEnded += (object sender, EventArgs e) => {
+            SwitchToSurvivalPhase();
+        };
+        gameTimer.OnGameTimerFinished += (object sender, EventArgs e) => {EndGame(true);};
+        gameTimer.OnChoresTimerFired += (object sender, EventArgs e) => {SwitchToChoresPhase();};
         // Initialize
-        // StartBattlePhase();
+        gameTimer.StartGameTimer();
     }
     #endregion
 
@@ -35,27 +35,25 @@ public class GameManager : MonoBehaviour
     //                     Flow Functions
     // ====================================================================================================
     #region Flow
-    // private void StartBattlePhase()
-    // {
-    //     player.Active = true;
-    //     enemy.Active = true;
-    //     gameTimer.StartBattleTimer();
-    // }
+    private void SwitchToSurvivalPhase()
+    {
+        player.Active = true;
+        gameTimer.ResumeGameTimer();
+    }
 
-    // private void StartChoresPhase()
-    // {
-    //     player.Active = false;
-    //     enemy.Active = false;
-    //     dishWashingController.StartMinigame();
-    // }
+    private void SwitchToChoresPhase()
+    {
+        player.Active = false;
+        gameTimer.PauseGameTimer();
+        dishWashingController.StartMinigame();
+    }
 
-    // private void EndGame(bool isPlayerWin)
-    // {
-    //     player.Active = false;
-    //     enemy.Active = false;
-    //     gameTimer.EndBattleTimer();
-    //     if (isPlayerWin) gameoverScreenController.OpenWinScreen();
-    //     else gameoverScreenController.OpenLoseScreen();
-    // }
+    private void EndGame(bool isPlayerWin)
+    {
+        player.Active = false;
+        gameTimer.EndGameTimer();
+        if (isPlayerWin) gameoverScreenController.OpenWinScreen();
+        else gameoverScreenController.OpenLoseScreen();
+    }
     #endregion
 }
