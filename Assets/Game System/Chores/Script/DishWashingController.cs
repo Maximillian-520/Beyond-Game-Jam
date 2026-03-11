@@ -68,8 +68,6 @@ public class DishWashingController : MonoBehaviour
         };
         // Initialize
         content.gameObject.SetActive(false);
-
-        StartMinigame();
     }
     #endregion
 
