@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using DG.Tweening;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,21 +11,26 @@ public class DishWashingAnimation : MonoBehaviour
     public event EventHandler OnScreenDisappearFinished;
     public event EventHandler OnPlateAppearFinished;
     public event EventHandler OnPlateDisappearFinished;
+    public event EventHandler OnDishWashingResultFinished;
 
     [Header("Component and Object")]
     [SerializeField] private CanvasGroup screenCanvasGroup;
     [SerializeField] private RectTransform plateCenterPosition;
     [SerializeField] private RectTransform plateAppearPosition;
     [SerializeField] private RectTransform plateDisappearPosition;
+    [SerializeField] private TextMeshProUGUI dishWashingResultText;
     [Header("Animation")]
     [SerializeField] private float screenFadeDuration = 1.0f;
     [SerializeField] private float plateMoveDuration = 1.0f;
+    [SerializeField] private float resultShowDuration = 2.5f;
+    [SerializeField] private float resultTransistionDuration = 0.5f;
 
     // Tween
     private Tween screenAppearTween;
     private Tween screenDisappearTween;
     private Tween plateAppearTween;
     private Tween plateDisappearTween;
+    private Tween dishWashingResultTween;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -36,6 +43,7 @@ public class DishWashingAnimation : MonoBehaviour
         Debug.Assert(plateCenterPosition, "plateCenterPosition is missing");
         Debug.Assert(plateAppearPosition, "plateAppearPosition is missing");
         Debug.Assert(plateDisappearPosition, "plateDisappearPosition is missing");
+        Debug.Assert(dishWashingResultText, "dishWashingResultText is missing");
     }
     #endregion
 
@@ -117,6 +125,23 @@ public class DishWashingAnimation : MonoBehaviour
             plateDisappearTween = null;
             OnPlateDisappearFinished.Invoke(this, EventArgs.Empty);
         });
+    }
+
+    public IEnumerator DoDishWashingResult()
+    {
+        // Transistion
+        dishWashingResultText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(resultTransistionDuration);
+        // Show
+        dishWashingResultText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(resultShowDuration);
+        // Transistion
+        dishWashingResultText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(resultTransistionDuration);
+        // Finished
+        OnDishWashingResultFinished.Invoke(this, EventArgs.Empty);
+        
+        // dishWashingResultTween = ;
     }
     #endregion
 }

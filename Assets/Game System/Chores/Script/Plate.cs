@@ -14,7 +14,8 @@ public class Plate : MonoBehaviour
     [SerializeField] private int plateDirtMinThickness = 3;
     [SerializeField] private int plateDirtMaxThickness = 5;
 
-    private int totalDirtThickness = 0;
+    private int currentDirtThickness = 0;
+    private int initialDirtThickness = 0;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -49,12 +50,20 @@ public class Plate : MonoBehaviour
             // Set thickness
             int randomThickness = UnityEngine.Random.Range(plateDirtMinThickness, plateDirtMaxThickness);
             plateDirtInstance.Thickness = randomThickness;
+            initialDirtThickness += randomThickness;
             // Set parent
             plateDirtInstance.transform.SetParent(transform);
             // Connect events and update variables
-            plateDirtInstance.OnPlateDirtCleaned += (object sender, EventArgs e) => totalDirtThickness--;
-            totalDirtThickness++;
+            plateDirtInstance.OnDirtThicknessReduced += (object sender, EventArgs e) =>
+                currentDirtThickness--;
         }
+        // Set current thickness
+        currentDirtThickness = initialDirtThickness;
+    }
+
+    public float GetRemainingDirtThickness()
+    {
+        return currentDirtThickness / (float)initialDirtThickness;
     }
     #endregion
 

@@ -2524,8 +2524,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTime: 70
-  minChoresTime: 15
-  maxChoresTime: 15
+  minChoresTime: 2
+  maxChoresTime: 2
 --- !u!4 &1598809700
 Transform:
   m_ObjectHideFlags: 0

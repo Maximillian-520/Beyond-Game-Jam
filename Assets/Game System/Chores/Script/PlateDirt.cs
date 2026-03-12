@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlateDirt : MonoBehaviour, IPointerEnterHandler
 {
-    public event EventHandler OnPlateDirtCleaned;
+    public event EventHandler OnDirtThicknessReduced;
 
     [Header("Component and Object")]
     [SerializeField] private UnityEngine.UI.Image image;
@@ -50,6 +50,7 @@ public class PlateDirt : MonoBehaviour, IPointerEnterHandler
         if (!Sponge.Instance.Scrubbing) return;
         // Reduce thickness
         Thickness--;
+        OnDirtThicknessReduced.Invoke(this, EventArgs.Empty);
     }
     #endregion
     
@@ -69,10 +70,6 @@ public class PlateDirt : MonoBehaviour, IPointerEnterHandler
         else image.sprite = dirtTextureList[Math.Max(currentThickness - 1 , 0)];
     }
 
-    private void DespawnPlateDirt()
-    {
-        OnPlateDirtCleaned.Invoke(this, EventArgs.Empty);
-        Destroy(gameObject);
-    }
+    private void DespawnPlateDirt() {Destroy(gameObject);}
     #endregion
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +14,7 @@ public class DishWashingController : MonoBehaviour
     [SerializeField] private GameObject content;
     [SerializeField] private RectTransform plateParent;
     [SerializeField] private TextMeshProUGUI plateAmountText;
+    [SerializeField] private TextMeshProUGUI dishWashingResultText;
     [SerializeField] private Button nextPlateButton;
     [Header("Prefab")]
     [SerializeField] private Plate platePrefab;
@@ -23,6 +26,7 @@ public class DishWashingController : MonoBehaviour
     private Plate currentPlate;
     // Dish washing
     private int currentPlateAmount = 0;
+    private List<float> remainingDirtThicknessList = new List<float>();
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -34,6 +38,7 @@ public class DishWashingController : MonoBehaviour
         Debug.Assert(dishWashingAnimation, "dishWashingAnimation is missing");
         Debug.Assert(content, "content is missing");
         Debug.Assert(plateAmountText, "plateAmountText is missing");
+        Debug.Assert(dishWashingResultText, "dishWashingResultText is missing");
         Debug.Assert(plateParent, "plateParent is missing");
         Debug.Assert(nextPlateButton, "nextPlateButton is missing");
         // Connect event
@@ -57,16 +62,25 @@ public class DishWashingController : MonoBehaviour
         };
         dishWashingAnimation.OnPlateDisappearFinished += (object sender, EventArgs e) =>
         {
+            // Get remaining dirt thickness
+            remainingDirtThicknessList.Add(previousPlate.GetRemainingDirtThickness());
             // Destroy previous plate
             if (previousPlate)
             {
                 Destroy(previousPlate.gameObject);
                 previousPlate = null;
             }
-            // Check is game finished
-            if (currentPlateAmount >= gamePlateAmount) EndMinigame();
+            // Check is no plates left
+            if (currentPlateAmount >= gamePlateAmount) ShowDishWashingResult();
+        };
+        dishWashingAnimation.OnDishWashingResultFinished += (object sender, EventArgs e) =>
+        {
+            EndMinigame();
         };
         // Initialize
+        remainingDirtThicknessList.Clear();
+        plateAmountText.gameObject.SetActive(false);
+        dishWashingResultText.gameObject.SetActive(false);
         content.SetActive(false);
     }
     #endregion
@@ -79,6 +93,7 @@ public class DishWashingController : MonoBehaviour
     {
         // Set active
         content.SetActive(true);
+        plateAmountText.gameObject.SetActive(true);
         // Setup minigame
         previousPlate = null;
         currentPlate = null;
@@ -139,10 +154,28 @@ public class DishWashingController : MonoBehaviour
     private void UpdatePlateAmount()
     {
         plateAmountText.text = 
-            $"Plate Left : {(gamePlateAmount - currentPlateAmount).ToString()}" +
+            $"Plate Left : {gamePlateAmount - currentPlateAmount}" +
             "\n" +
-            $"Plate Completed : {currentPlateAmount.ToString()}"
+            $"Plate Completed : {currentPlateAmount}"
         ;
+    }
+
+    private void ShowDishWashingResult()
+    {
+        // Set active
+        plateAmountText.gameObject.SetActive(false);
+        dishWashingResultText.gameObject.SetActive(true);
+        // Calculate results
+        float remainingResult = remainingDirtThicknessList.Sum() / remainingDirtThicknessList.Count;
+        remainingResult *= 100.0f;
+        // Set text
+        dishWashingResultText.text =
+            "<b><u>Results</u></b>" +
+            "\n" +
+            $"Remainding Dirt = {(int)remainingResult}%"
+        ;
+        // Do animation
+        StartCoroutine(dishWashingAnimation.DoDishWashingResult());
     }
     #endregion
 }
