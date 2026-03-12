@@ -70,6 +70,8 @@ public class GameTimer : MonoBehaviour
         isChoresTimerActive = false;
     }
 
+    public float GetGameTimerNormalized() {return gameTimer / gameTime;}
+
     private void ResetChoresTimer()
     {
         choresTimer = UnityEngine.Random.Range(minChoresTime, maxChoresTime);

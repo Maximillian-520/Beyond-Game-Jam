@@ -17,7 +17,7 @@ public class GameoverScreenController : MonoBehaviour
     //                     Virtual Functions
     // ====================================================================================================
     #region Virtual
-    void Start()
+    private void Start()
     {
         // Assertion check
         Debug.Assert(content, "content is missing");
