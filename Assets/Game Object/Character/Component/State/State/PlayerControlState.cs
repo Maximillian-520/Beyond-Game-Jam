@@ -8,8 +8,8 @@ public class PlayerControlState : BaseState
     [SerializeField] private PlayerSprite playerSprite;
     [SerializeField] private InputHandler inputHandler;
     [Header("Move")]
-    [SerializeField] private float maxWalkSpeed = 14f;
-    [SerializeField] private float speedAcceleration = 120f;
+    public float maxWalkSpeed = 14f;
+    public float speedAcceleration = 120f;
 
     private int facingDirection = 1;
 

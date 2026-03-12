@@ -8,8 +8,8 @@ public class PlayerSprite : MonoBehaviour
     [SerializeField] private Animator animator;
     // [SerializeField] private List<SpriteRenderer> spriteList;
     [Header("Hurt")]
-    [SerializeField] private Color hurtFlashColor = Color.red;
-    [SerializeField] private float hurtFlashTime = 0.2f;
+    // [SerializeField] private Color hurtFlashColor = Color.red;
+    // [SerializeField] private float hurtFlashTime = 0.2f;
 
     private int currentFacingDirection = 1;
 

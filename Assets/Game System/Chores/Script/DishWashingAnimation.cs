@@ -18,7 +18,9 @@ public class DishWashingAnimation : MonoBehaviour
     [SerializeField] private RectTransform plateCenterPosition;
     [SerializeField] private RectTransform plateAppearPosition;
     [SerializeField] private RectTransform plateDisappearPosition;
-    [SerializeField] private TextMeshProUGUI dishWashingResultText;
+    [SerializeField] private TextMeshProUGUI resultTitleText;
+    [SerializeField] private TextMeshProUGUI resultRemainingDirtText;
+    [SerializeField] private TextMeshProUGUI resultScoreText;
     [Header("Animation")]
     [SerializeField] private float screenFadeDuration = 1.0f;
     [SerializeField] private float plateMoveDuration = 1.0f;
@@ -43,7 +45,9 @@ public class DishWashingAnimation : MonoBehaviour
         Debug.Assert(plateCenterPosition, "plateCenterPosition is missing");
         Debug.Assert(plateAppearPosition, "plateAppearPosition is missing");
         Debug.Assert(plateDisappearPosition, "plateDisappearPosition is missing");
-        Debug.Assert(dishWashingResultText, "dishWashingResultText is missing");
+        Debug.Assert(resultTitleText, "resultTitleText is missing");
+        Debug.Assert(resultRemainingDirtText, "resultRemainingDirtText is missing");
+        Debug.Assert(resultScoreText, "resultScoreText is missing");
     }
     #endregion
 
@@ -129,19 +133,28 @@ public class DishWashingAnimation : MonoBehaviour
 
     public IEnumerator DoDishWashingResult()
     {
+        // Setup
+        resultTitleText.gameObject.SetActive(false);
+        resultRemainingDirtText.gameObject.SetActive(false);
+        resultScoreText.gameObject.SetActive(false);
         // Transistion
-        dishWashingResultText.gameObject.SetActive(false);
         yield return new WaitForSeconds(resultTransistionDuration);
-        // Show
-        dishWashingResultText.gameObject.SetActive(true);
+        // Show title
+        resultTitleText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(resultTransistionDuration);
+        // Show dirt remaining
+        resultRemainingDirtText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(resultTransistionDuration);
+        // Show score
+        resultScoreText.gameObject.SetActive(true);
         yield return new WaitForSeconds(resultShowDuration);
         // Transistion
-        dishWashingResultText.gameObject.SetActive(false);
+        resultTitleText.gameObject.SetActive(false);
+        resultRemainingDirtText.gameObject.SetActive(false);
+        resultScoreText.gameObject.SetActive(false);
         yield return new WaitForSeconds(resultTransistionDuration);
         // Finished
         OnDishWashingResultFinished.Invoke(this, EventArgs.Empty);
-        
-        // dishWashingResultTween = ;
     }
     #endregion
 }

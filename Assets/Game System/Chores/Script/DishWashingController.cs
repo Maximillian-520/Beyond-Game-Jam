@@ -11,10 +11,11 @@ public class DishWashingController : MonoBehaviour
 
     [Header("Component and Object")]
     [SerializeField] private DishWashingAnimation dishWashingAnimation;
+    [SerializeField] private DishWashingResult dishWashingResult;
     [SerializeField] private GameObject content;
+    [SerializeField] private GameObject resultContent;
     [SerializeField] private RectTransform plateParent;
     [SerializeField] private TextMeshProUGUI plateAmountText;
-    [SerializeField] private TextMeshProUGUI dishWashingResultText;
     [SerializeField] private Button nextPlateButton;
     [Header("Prefab")]
     [SerializeField] private Plate platePrefab;
@@ -36,9 +37,10 @@ public class DishWashingController : MonoBehaviour
     {
         // Assertion check
         Debug.Assert(dishWashingAnimation, "dishWashingAnimation is missing");
+        Debug.Assert(dishWashingResult, "dishWashingResult is missing");
         Debug.Assert(content, "content is missing");
+        Debug.Assert(resultContent, "resultContent is missing");
         Debug.Assert(plateAmountText, "plateAmountText is missing");
-        Debug.Assert(dishWashingResultText, "dishWashingResultText is missing");
         Debug.Assert(plateParent, "plateParent is missing");
         Debug.Assert(nextPlateButton, "nextPlateButton is missing");
         // Connect event
@@ -71,16 +73,19 @@ public class DishWashingController : MonoBehaviour
                 previousPlate = null;
             }
             // Check is no plates left
-            if (currentPlateAmount >= gamePlateAmount) ShowDishWashingResult();
+            if (currentPlateAmount >= gamePlateAmount) ShowResult();
         };
         dishWashingAnimation.OnDishWashingResultFinished += (object sender, EventArgs e) =>
         {
+            // End minigame
             EndMinigame();
+            // Apply speed effect
+            float remainingResult = remainingDirtThicknessList.Sum() / remainingDirtThicknessList.Count;
+            dishWashingResult.ApplySpeedEffect(remainingResult);
         };
         // Initialize
-        remainingDirtThicknessList.Clear();
         plateAmountText.gameObject.SetActive(false);
-        dishWashingResultText.gameObject.SetActive(false);
+        resultContent.SetActive(false);
         content.SetActive(false);
     }
     #endregion
@@ -99,6 +104,7 @@ public class DishWashingController : MonoBehaviour
         currentPlate = null;
         currentPlateAmount = 0;
         UpdatePlateAmount();
+        remainingDirtThicknessList.Clear();
         Sponge.Instance.Active = false;
         nextPlateButton.gameObject.SetActive(false);
         // Start sequence
@@ -159,21 +165,20 @@ public class DishWashingController : MonoBehaviour
             $"Plate Completed : {currentPlateAmount}"
         ;
     }
+    #endregion
 
-    private void ShowDishWashingResult()
+    // ====================================================================================================
+    //                     Result Functions
+    // ====================================================================================================
+    #region Result
+    private void ShowResult()
     {
         // Set active
         plateAmountText.gameObject.SetActive(false);
-        dishWashingResultText.gameObject.SetActive(true);
-        // Calculate results
+        resultContent.SetActive(true);
+        // Calculate and set results
         float remainingResult = remainingDirtThicknessList.Sum() / remainingDirtThicknessList.Count;
-        remainingResult *= 100.0f;
-        // Set text
-        dishWashingResultText.text =
-            "<b><u>Results</u></b>" +
-            "\n" +
-            $"Remainding Dirt = {(int)remainingResult}%"
-        ;
+        dishWashingResult.SetResultText(remainingResult);
         // Do animation
         StartCoroutine(dishWashingAnimation.DoDishWashingResult());
     }

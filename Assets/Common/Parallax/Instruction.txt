@@ -1,0 +1,4 @@
+1. Place ParallaxController script in a parent object of choosing
+2. Create child objects of that parent, place any sprite of choosing to become a parallax layer
+3. Place ParallaxLayer script on the child, adjust the settings for the layer
+3. Create and adjust as many layer objects as much as you want

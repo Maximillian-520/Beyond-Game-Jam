@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private StateController stateController;
     [SerializeField] private PlayerSprite playerSprite;
     [SerializeField] private Transform centerPosition;
+    public PlayerBuffController playerBuffController;
 
     public bool Active
     {
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour, IDamageable
         Debug.Assert(stateController, "stateController is missing");
         Debug.Assert(playerSprite, "playerSprite is missing");
         Debug.Assert(centerPosition, "centerPosition is missing");
+        Debug.Assert(playerBuffController, "playerBuffController is missing");
     }
     #endregion
 

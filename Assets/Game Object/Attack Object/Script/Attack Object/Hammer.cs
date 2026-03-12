@@ -35,13 +35,13 @@ public class Hammer : BaseAttackObject
             transform.position.z
         );
         // Set rotation
-        float flippedAngleX =  transform.eulerAngles.x;
+        float flippedScaleX =  transform.localScale.x;
         int randomNumber = UnityEngine.Random.Range(0, 2);
-        if (randomNumber == 0) flippedAngleX *= -1;
-        transform.eulerAngles = new Vector3(
-            flippedAngleX,
-            transform.eulerAngles.y,
-            transform.position.z
+        if (randomNumber == 0) flippedScaleX *= -1;
+        transform.localScale = new Vector3(
+            flippedScaleX,
+            transform.localScale.y,
+            transform.localScale.z
         );
     }
 
