@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-public class Hammer : BaseAttackObject
+public class Rock : BaseAttackObject
 {
     [Header("Component and Object")]
     [SerializeField] private DamageTriggerArea damageTriggerArea;
@@ -30,17 +29,8 @@ public class Hammer : BaseAttackObject
     {
         // Set position
         transform.position = new Vector3(
-            Mathf.Clamp(Player.Instance.transform.position.x, minSpawnRangeX, maxSpawnRangeX),
-            Mathf.Clamp(Player.Instance.transform.position.y, minSpawnRangeY, maxSpawnRangeY),
-            transform.position.z
-        );
-        // Set rotation
-        float flippedAngleX =  transform.eulerAngles.x;
-        int randomNumber = UnityEngine.Random.Range(0, 2);
-        if (randomNumber == 0) flippedAngleX *= -1;
-        transform.eulerAngles = new Vector3(
-            flippedAngleX,
-            transform.eulerAngles.y,
+            UnityEngine.Random.Range(minSpawnRangeX, maxSpawnRangeX),
+            UnityEngine.Random.Range(minSpawnRangeY, maxSpawnRangeY),
             transform.position.z
         );
     }

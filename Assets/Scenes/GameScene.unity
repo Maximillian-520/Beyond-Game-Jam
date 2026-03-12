@@ -842,7 +842,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 5bcc446e838613046ba6940e3e891442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2524,8 +2524,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTime: 70
-  minChoresTime: 2
-  maxChoresTime: 2
+  minChoresTime: 15
+  maxChoresTime: 15
 --- !u!4 &1598809700
 Transform:
   m_ObjectHideFlags: 0
@@ -3193,6 +3193,7 @@ MonoBehaviour:
   baseAttackObjectPrefabList:
   - {fileID: 7475450278378888995, guid: d0fc589862f03e845ba4e837ec05730b, type: 3}
   - {fileID: 4233124369332157008, guid: 6557a9e6d6a75b64a998575b5c7dd6a0, type: 3}
+  - {fileID: 697783891735013809, guid: 3b9e5eb613992c1499674d4551dd2f89, type: 3}
   minSpawnTime: 0.1
   maxSpawnTime: 0.2
   initialSpawnTime: 1
