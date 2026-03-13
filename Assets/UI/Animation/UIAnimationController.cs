@@ -1,10 +1,14 @@
 using System;
+using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class UIAnimationController : MonoBehaviour
 {
     public event EventHandler OnOpeningSequenceFinished;
     public event EventHandler OnChoreBreakFinished;
+    public event EventHandler OnPlayerWinFinihsed;
+    public event EventHandler OnPlayerLoseFinihsed;
 
     [Header("Component and Object")]
     [SerializeField] private Animator animator;
@@ -12,6 +16,8 @@ public class UIAnimationController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private string openingSequenceAnimationName = "UIOpeningSequence";
     [SerializeField] private string choreBreakAnimationName = "UIChoreBreak";
+    [SerializeField] private string playerWinAnimationName = "UIPlayerWin";
+    [SerializeField] private string playerLoseAnimationName = "UIPlayerLose";
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -41,5 +47,26 @@ public class UIAnimationController : MonoBehaviour
     }
 
     public void ChoreBreakFinish() {OnChoreBreakFinished.Invoke(this, EventArgs.Empty);}
+
+    public void DoPlayerWin()
+    {
+        animator.Play(playerWinAnimationName, 0);
+    }
+
+    public void PlayerWinFinish() {OnPlayerWinFinihsed.Invoke(this, EventArgs.Empty);}
+
+    public void DoPlayerLose()
+    {
+        animator.Play(playerLoseAnimationName, 0);
+    }
+
+    public void PlayerLoseFinish() {OnPlayerLoseFinihsed.Invoke(this, EventArgs.Empty);}
+    #endregion
+
+    // ====================================================================================================
+    //                     External Functions
+    // ====================================================================================================
+    #region External
+    public void DoPlayerDisappear() {Player.Instance.playerSprite.DoDisappear();}
     #endregion
 }

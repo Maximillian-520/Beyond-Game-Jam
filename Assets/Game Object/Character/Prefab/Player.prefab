@@ -154,8 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateController: {fileID: 4606013614054887254}
-  playerSprite: {fileID: 7210134023812740562}
   centerPosition: {fileID: 658282521440566921}
+  playerSprite: {fileID: 7210134023812740562}
   playerBuffController: {fileID: 1773942579490973804}
 --- !u!114 &1773942579490973804
 MonoBehaviour:
@@ -19827,6 +19827,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Sprite
       objectReference: {fileID: 0}
+    - target: {fileID: 4254820760912906036, guid: 871fd7c2094c93942bec43b6f1fc1e3b, type: 3}
+      propertyPath: shadow
+      value: 
+      objectReference: {fileID: 3292887053864523922}
     - target: {fileID: 8711184764569554572, guid: 871fd7c2094c93942bec43b6f1fc1e3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

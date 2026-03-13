@@ -39,6 +39,14 @@ public class GameManager : MonoBehaviour
         {
             dishWashingController.StartMinigame();
         };
+        uiAnimationController.OnPlayerWinFinihsed += (object sender, EventArgs e) =>
+        {
+            gameoverScreenController.OpenWinScreen();
+        };
+        uiAnimationController.OnPlayerLoseFinihsed += (object sender, EventArgs e) =>
+        {
+            gameoverScreenController.OpenLoseScreen();
+        };
         dishWashingController.OnMinigameEnded += (object sender, EventArgs e) =>
         {
             SwitchToSurvivalPhase();
@@ -81,8 +89,8 @@ public class GameManager : MonoBehaviour
         gameTimer.PauseGameTimer();
         attackObjectSpawner.PauseSpawnTimer();
         // Open gameover screen
-        if (isPlayerWin) gameoverScreenController.OpenWinScreen();
-        else gameoverScreenController.OpenLoseScreen();
+        if (isPlayerWin) uiAnimationController.DoPlayerWin();
+        else uiAnimationController.DoPlayerLose();
     }
     #endregion
 }

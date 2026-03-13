@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerSprite : MonoBehaviour
 {
     [Header("Component and Object")]
     [SerializeField] private Animator animator;
-    // [SerializeField] private List<SpriteRenderer> spriteList;
-    [Header("Hurt")]
-    // [SerializeField] private Color hurtFlashColor = Color.red;
-    // [SerializeField] private float hurtFlashTime = 0.2f;
+    [SerializeField] private List<SpriteRenderer> spriteList;
+    [Tooltip("Can be left empty")]
+    [SerializeField] private SpriteRenderer shadow;
+    [Header("Animation")]
+    [SerializeField] private Color hurtFlashColor = Color.red;
+    [SerializeField] private float disappearFreezeDuration = 1f;
+    [SerializeField] private float disappearTransitionDuration = 1f;
 
     private int currentFacingDirection = 1;
 
@@ -22,7 +26,7 @@ public class PlayerSprite : MonoBehaviour
         // Assertion check
         Debug.Assert(animator, "animator is missing");
         // Check spriteList
-        // if (spriteList.Count == 0) Debug.Log("spriteList is empty");
+        if (spriteList.Count == 0) Debug.Log("spriteList is empty");
     }
     #endregion
 
@@ -53,22 +57,35 @@ public class PlayerSprite : MonoBehaviour
         animator.SetBool("isWalking", true);
     }
 
-    public void DoHurt()
+    public void DoHurt(float duration) {StartCoroutine(DisplayHurtFlash(duration));}
+
+    public void DoDisappear() {StartCoroutine(DisappearSequence());}
+
+    private IEnumerator DisplayHurtFlash(float duration)
     {
-        // StartCoroutine(DisplayHurtFlash());
+        foreach (SpriteRenderer sprite in spriteList)
+        {
+            sprite.color = hurtFlashColor;
+        }
+        yield return new WaitForSecondsRealtime(duration);
+        foreach (SpriteRenderer sprite in spriteList)
+        {
+            sprite.color = Color.white;
+        }
     }
 
-    // private IEnumerator DisplayHurtFlash()
-    // {
-    //     foreach (SpriteRenderer sprite in spriteList)
-    //     {
-    //         sprite.color = hurtFlashColor;
-    //     }
-    //     yield return new WaitForSeconds(hurtFlashTime);
-    //     foreach (SpriteRenderer sprite in spriteList)
-    //     {
-    //         sprite.color = Color.white;
-    //     }
-    // }
+    private IEnumerator DisappearSequence()
+    {
+        foreach (SpriteRenderer sprite in spriteList)
+        {
+            sprite.color = hurtFlashColor;
+        }
+        yield return new WaitForSeconds(disappearFreezeDuration);
+        foreach (SpriteRenderer sprite in spriteList)
+        {
+            sprite.DOColor(new Color(0, 0, 0, 0), disappearTransitionDuration);
+        }
+        if (shadow) shadow.DOColor(new Color(0, 0, 0, 0), disappearTransitionDuration);
+    }
     #endregion
 }

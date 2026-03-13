@@ -9,8 +9,8 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("Component and Object")]
     [SerializeField] private StateController stateController;
-    [SerializeField] private PlayerSprite playerSprite;
     [SerializeField] private Transform centerPosition;
+    public PlayerSprite playerSprite;
     public PlayerBuffController playerBuffController;
 
     public bool Active
