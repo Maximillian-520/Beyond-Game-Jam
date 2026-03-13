@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     // Game Object
     [SerializeField] private Player player;
     [SerializeField] private AttackObjectSpawner attackObjectSpawner;
+    [SerializeField] private UIAnimationController uiAnimationController;
     [SerializeField] private DishWashingController dishWashingController;
     [SerializeField] private GameoverScreenController gameoverScreenController;
     // System
@@ -22,20 +23,30 @@ public class GameManager : MonoBehaviour
         // Assertion check
         Debug.Assert(player, "player is missing");
         Debug.Assert(attackObjectSpawner, "attackObjectSpawner");
+        Debug.Assert(uiAnimationController, "uiAnimationController is missing");
         Debug.Assert(dishWashingController, "dishWashingController is missing");
         Debug.Assert(gameoverScreenController, "gameoverScreenController is missing");
         Debug.Assert(gameTimer, "gameTimer is missing");
         Debug.Assert(progressionController, "progressionController");
         // Connect events
         player.OnPlayerDied += (object sender, EventArgs e) => {EndGame(false);};
-        dishWashingController.OnMinigameEnded += (object sender, EventArgs e) => {
+        uiAnimationController.OnOpeningSequenceFinished += (object sender, EventArgs e) =>
+        {
+            gameTimer.StartGameTimer();
+            attackObjectSpawner.ResumeSpawnTimer();
+        };
+        uiAnimationController.OnChoreBreakFinished += (object sender, EventArgs e) =>
+        {
+            dishWashingController.StartMinigame();
+        };
+        dishWashingController.OnMinigameEnded += (object sender, EventArgs e) =>
+        {
             SwitchToSurvivalPhase();
         };
         gameTimer.OnGameTimerFinished += (object sender, EventArgs e) => {EndGame(true);};
         gameTimer.OnChoresTimerFired += (object sender, EventArgs e) => {SwitchToChoresPhase();};
         // Initialize
-        gameTimer.StartGameTimer();
-        attackObjectSpawner.ResumeSpawnTimer();
+        uiAnimationController.DoOpeningSequence();
     }
     #endregion
 
@@ -59,8 +70,8 @@ public class GameManager : MonoBehaviour
         player.Active = false;
         gameTimer.PauseGameTimer();
         attackObjectSpawner.PauseSpawnTimer();
-        // Start minigame
-        dishWashingController.StartMinigame();
+        // Play animation
+        uiAnimationController.DoChoreBreak();
     }
 
     private void EndGame(bool isPlayerWin)

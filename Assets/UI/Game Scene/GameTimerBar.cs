@@ -21,7 +21,7 @@ public class GameTimerBar : MonoBehaviour
     private void Update()
     {
         // Update bar
-        barFill.fillAmount = gameTimer.GetGameTimerNormalized();
+        if (gameTimer.IsGameTimerRunning()) barFill.fillAmount = gameTimer.GetGameTimerNormalized();
     }
     #endregion
 }

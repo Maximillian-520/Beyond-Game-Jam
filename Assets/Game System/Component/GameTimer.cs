@@ -71,6 +71,8 @@ public class GameTimer : MonoBehaviour
     }
 
     public float GetGameTimerNormalized() {return gameTimer / gameTime;}
+    
+    public bool IsGameTimerRunning() {return isGameTimerActive;}
 
     private void ResetChoresTimer()
     {

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlatesAmountTextMaterial
+  m_Name: OpeningTextMaterial
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_Parent: {fileID: -4337587369141290560, guid: 5af0ea27c65ca35478af12c164793953, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -27,13 +27,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _GlowInner: 0
-    - _GlowOffset: -0.91
-    - _GlowOuter: 0.913
-    - _GlowPower: 0.475
+    - _GlowOffset: 0
+    - _GlowOuter: 0.7
+    - _GlowPower: 0.8
+    - _OutlineWidth: 0
     - _ScaleRatioB: 0.73125
     - _ScaleRatioC: 0.73125
+    - _UnderlayDilate: 0
     - _UnderlayOffsetX: 0
     - _UnderlayOffsetY: -1
+    - _UnderlaySoftness: 0
     m_Colors:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
