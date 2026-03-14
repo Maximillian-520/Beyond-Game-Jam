@@ -97,6 +97,8 @@ public class GameManager : MonoBehaviour
         // Open gameover screen
         if (isPlayerWin) uiAnimationController.DoPlayerWin();
         else uiAnimationController.DoPlayerLose();
+        // Save data
+        GameSaveHandler.SaveGameData(new GameData{isEmpty = false, isGameDefeated = true});
     }
     #endregion
 }
