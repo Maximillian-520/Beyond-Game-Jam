@@ -75,9 +75,9 @@ public class AudioSettingsController : MonoBehaviour
     {
         // Save settings
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
-        PlayerPrefs.SetFloat("EffectsVolume", sfxVolume);
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
         PlayerPrefs.SetInt("MuteMusic", isMusicMute ? 1 : 0);
-        PlayerPrefs.SetInt("MuteEffects", isSfxMute ? 1 : 0);
+        PlayerPrefs.SetInt("MuteSFX", isSfxMute ? 1 : 0);
         PlayerPrefs.Save();
         // Apply new saved changes
         ApplySettings();

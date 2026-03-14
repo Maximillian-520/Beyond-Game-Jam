@@ -24,6 +24,11 @@ public class Sponge : MonoBehaviour
             isActive = value;
             transform.position = Input.mousePosition;
             image.gameObject.SetActive(isActive);
+            if (!isActive)
+            {
+                sfxBufferTimer = 0.0f;
+                AudioManager.Instance.StopSFXLooping();
+            }
         }
         get{return isActive;}
     }

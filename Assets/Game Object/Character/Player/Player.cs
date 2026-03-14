@@ -72,7 +72,6 @@ public class Player : MonoBehaviour, IDamageable
 
     private void CharacterDie()
     {
-        Debug.Log("player dead");
         playerBuffController.ClearSpeedEffect();
         OnPlayerDied.Invoke(this, EventArgs.Empty);
     }

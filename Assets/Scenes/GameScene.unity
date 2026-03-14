@@ -179,6 +179,7 @@ MonoBehaviour:
   normalContentOffset: {x: 0, y: 0}
   hoverContentOffset: {x: 0, y: 0}
   pressedContentOffset: {x: 0, y: -6}
+  sfxName: Button
 --- !u!114 &61051049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,7 +1292,7 @@ MonoBehaviour:
   gameTimer: {fileID: 1598809699}
   progressionController: {fileID: 1488069776}
   survivalMusicName: Survival
-  choresMusicName: Chores
+  musicFadeDuration: 0.8
 --- !u!4 &669935325
 Transform:
   m_ObjectHideFlags: 0
@@ -3537,12 +3538,8 @@ MonoBehaviour:
     maxSpawnTime: 0.15
   - minSpawnTime: 0.07
     maxSpawnTime: 0.1
-  - minSpawnTime: 0.05
-    maxSpawnTime: 0.08
-  - minSpawnTime: 0.03
+  - minSpawnTime: 0.04
     maxSpawnTime: 0.06
-  - minSpawnTime: 0.01
-    maxSpawnTime: 0.02
 --- !u!4 &1488069777
 Transform:
   m_ObjectHideFlags: 0
@@ -3587,9 +3584,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70baeee7964b944b950105f53a332f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 70
-  minChoresTime: 15
-  maxChoresTime: 15
+  gameTime: 60
+  minChoresTime: 13
+  maxChoresTime: 13
 --- !u!4 &1598809700
 Transform:
   m_ObjectHideFlags: 0
@@ -4797,6 +4794,7 @@ MonoBehaviour:
   normalContentOffset: {x: 0, y: 0}
   hoverContentOffset: {x: 0, y: 0}
   pressedContentOffset: {x: 0, y: -6}
+  sfxName: Button
 --- !u!114 &1906086184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5265,6 +5263,10 @@ PrefabInstance:
     - target: {fileID: 5896506462142014344, guid: 34f67bb95503b824b90b49afb8e8999b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627140689470581564, guid: 34f67bb95503b824b90b49afb8e8999b, type: 3}
+      propertyPath: speedEffectDuration
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

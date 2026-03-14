@@ -1,5 +1,6 @@
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,9 @@ public class GameoverScreenController : MonoBehaviour
     [SerializeField] private string backToMenuTargetSceneName = "MainMenuScene";
     [Header("Animation")]
     [SerializeField] private float fadeInDuration = 1.0f;
+
+    private Tween winScreenFadeInTween;
+    private Tween loseScreenFadeInTween;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -50,7 +54,7 @@ public class GameoverScreenController : MonoBehaviour
         winScreenContent.SetActive(true);
         titleText.text = "You Win!";
         // Do fade in
-        DOTween.To(
+        winScreenFadeInTween = DOTween.To(
             () => {return contentCanvasGroup.alpha;},
             (float value) => {contentCanvasGroup.alpha = value;},
             1.0f,
@@ -65,7 +69,7 @@ public class GameoverScreenController : MonoBehaviour
         loseScreenContent.SetActive(true);
         titleText.text = "You Lose!";
         // Do fade in
-        DOTween.To(
+        loseScreenFadeInTween = DOTween.To(
             () => {return contentCanvasGroup.alpha;},
             (float value) => {contentCanvasGroup.alpha = value;},
             1.0f,
@@ -80,12 +84,16 @@ public class GameoverScreenController : MonoBehaviour
     #region Button
     public void OnRestart()
     {
+        if (!winScreenFadeInTween.IsUnityNull()) winScreenFadeInTween.Kill();
+        if (!loseScreenFadeInTween.IsUnityNull()) loseScreenFadeInTween.Kill();
         AudioManager.Instance.StopMusic();
         SceneManager.LoadScene(restartTargerSceneName);
     }
 
     public void OnBackToMenu()
     {
+        if (!winScreenFadeInTween.IsUnityNull()) winScreenFadeInTween.Kill();
+        if (!loseScreenFadeInTween.IsUnityNull()) loseScreenFadeInTween.Kill();
         AudioManager.Instance.StopMusic();
         SceneManager.LoadScene(backToMenuTargetSceneName);
     }
