@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Hammer : BaseAttackObject
 {
     [Header("Component and Object")]
     [SerializeField] private DamageTriggerArea damageTriggerArea;
+    [SerializeField] private List<ParticleSystem> particleList;
     [Header("Spawn")]
     [SerializeField] private float minSpawnRangeX = -10f;
     [SerializeField] private float maxSpawnRangeX = 10f;
@@ -20,6 +22,7 @@ public class Hammer : BaseAttackObject
     {
         // Assertion check
         Debug.Assert(damageTriggerArea, "damageTriggerArea is missing");
+        Debug.Assert(particleList.Count > 0, "particleList is missing");
     }
     #endregion
 
@@ -50,6 +53,11 @@ public class Hammer : BaseAttackObject
     {
         damageTriggerArea.TriggerDamage();
         AudioManager.Instance.PlaySFX(sfxName);
+    }
+
+    public void TriggerParticle()
+    {
+        foreach(ParticleSystem particle in particleList) particle.Play();
     }
     #endregion
 }

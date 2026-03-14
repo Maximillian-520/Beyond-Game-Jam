@@ -5,6 +5,7 @@ public class Rock : BaseAttackObject
 {
     [Header("Component and Object")]
     [SerializeField] private DamageTriggerArea damageTriggerArea;
+    [SerializeField] private List<ParticleSystem> particleList;
     [Header("Spawn")]
     [SerializeField] private float minSpawnRangeX = -10f;
     [SerializeField] private float maxSpawnRangeX = 10f;
@@ -23,6 +24,7 @@ public class Rock : BaseAttackObject
     {
         // Assertion check
         Debug.Assert(damageTriggerArea, "damageTriggerArea is missing");
+        Debug.Assert(particleList.Count > 0, "particleList is missing");
         Debug.Assert(sfxNameList.Count > 0, "sfxNameList is missing");
     }
     #endregion
@@ -50,6 +52,11 @@ public class Rock : BaseAttackObject
         }
         else AudioManager.Instance.PlaySFX(sfxNameList[sfxPlayCount]);
         sfxPlayCount++;
+    }
+
+    public void TriggerParticle()
+    {
+        foreach(ParticleSystem particle in particleList) particle.Play();
     }
     #endregion
 }
