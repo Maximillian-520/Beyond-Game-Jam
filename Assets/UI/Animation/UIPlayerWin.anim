@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: Game Timer Bar
+    path: Top Center Pivot/Game Timer Bar
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -82,7 +82,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_fontColor.a
-    path: Survived Title Text
+    path: Top Center Pivot/Survived Title Text
     classID: 114
     script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
     flags: 0
@@ -121,7 +121,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: Survived Title Text
+    path: Top Center Pivot/Survived Title Text
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -134,7 +134,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1041785998
+      path: 639317789
       attribute: 538195251
       script: {fileID: 0}
       typeID: 224
@@ -143,7 +143,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2839166126
+      path: 1719265058
       attribute: 4185109675
       script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
       typeID: 114
@@ -152,7 +152,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2839166126
+      path: 1719265058
       attribute: 538195251
       script: {fileID: 0}
       typeID: 224
@@ -208,7 +208,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: Game Timer Bar
+    path: Top Center Pivot/Game Timer Bar
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -247,7 +247,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_fontColor.a
-    path: Survived Title Text
+    path: Top Center Pivot/Survived Title Text
     classID: 114
     script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
     flags: 0
@@ -286,7 +286,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: Survived Title Text
+    path: Top Center Pivot/Survived Title Text
     classID: 224
     script: {fileID: 0}
     flags: 0

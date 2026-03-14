@@ -57,7 +57,9 @@ public class MainMenuController : MonoBehaviour
     public void OnQuit()
     {
         Application.Quit();
-        EditorApplication.ExitPlaymode();
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 
     public void OnBack()
