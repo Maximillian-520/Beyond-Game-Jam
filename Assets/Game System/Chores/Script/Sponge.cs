@@ -9,6 +9,13 @@ public class Sponge : MonoBehaviour
     [SerializeField] private Image image;
     [Header("Input")]
     [SerializeField] private int buttonInputNumber = 0; // Idk what this is
+    [Header("SFX")]
+    [SerializeField] private string sfxName = "Sponge";
+    [SerializeField] private float sfxminimumVelocityThreshold = 10.0f;
+    [SerializeField] private float sfxBufferTime = 0.2f;
+
+    private Vector3 previousPosition;
+    private float sfxBufferTimer = 0.0f;
 
     public bool Active
     {
@@ -45,12 +52,31 @@ public class Sponge : MonoBehaviour
 
     private void Update()
     {
+        // Update scrubbing
         isScrubbing = Input.GetMouseButton(buttonInputNumber);
+        // Update buffer timer
+        if (sfxBufferTimer > 0) sfxBufferTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
-        if (isActive) transform.position = Input.mousePosition;
+        if (isActive)
+        {
+            // Update position
+            transform.position = Input.mousePosition;
+            // Check is sfx can play
+            Vector3 distanceVector = transform.position - previousPosition;
+            float velocity = distanceVector.magnitude / Time.fixedDeltaTime;
+            if (isScrubbing && velocity >= sfxminimumVelocityThreshold)
+            {
+                AudioManager.Instance.PlaySFXLooping(sfxName);
+                sfxBufferTimer = sfxBufferTime;
+            }
+            else if (sfxBufferTimer > 0) AudioManager.Instance.PlaySFXLooping(sfxName);
+            else AudioManager.Instance.StopSFXLooping();
+            // Update previous position
+            previousPosition = Input.mousePosition;
+        }
     }
     #endregion
 }

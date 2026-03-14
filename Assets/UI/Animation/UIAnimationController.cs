@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 
 public class UIAnimationController : MonoBehaviour
@@ -43,7 +41,7 @@ public class UIAnimationController : MonoBehaviour
 
     public void DoChoreBreak()
     {
-        animator.Play(choreBreakAnimationName, 0);
+        animator.Play(choreBreakAnimationName, 0, 0.0f);
     }
 
     public void ChoreBreakFinish() {OnChoreBreakFinished.Invoke(this, EventArgs.Empty);}

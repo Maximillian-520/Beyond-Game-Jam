@@ -8,8 +8,8 @@ public class DishWashingResult : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultRemainingDirtText;
     [SerializeField] private TextMeshProUGUI resultScoreText;
     [Header("Result")]
-    [Tooltip("Actual threshold = resultBadThreshold - resultHorribleThreshold ")]
-    [SerializeField] private float resultHorribleThreshold = 1.0f;
+    // [Tooltip("Actual threshold = resultBadThreshold - resultHorribleThreshold ")]
+    // [SerializeField] private float resultHorribleThreshold = 1.0f;
     [Tooltip("Actual threshold = resultNormalThreshold - resultBadThreshold")]
     [SerializeField] private float resultBadThreshold = 0.8f;
     [Tooltip("Actual threshold = resultGoodThreshold - resultNormalThreshold")]

@@ -333,6 +333,10 @@ MonoBehaviour:
   maxSpawnRangeX: 6.75
   minSpawnRangeY: -5.55
   maxSpawnRangeY: 5.55
+  sfxNameList:
+  - Rock1
+  - Rock2
+  - Rock3
 --- !u!1 &9151313575408588072
 GameObject:
   m_ObjectHideFlags: 0

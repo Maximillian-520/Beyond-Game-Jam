@@ -5,6 +5,8 @@ public class Knife : BaseAttackObject
     [Header("Spawn")]
     [SerializeField] private float minSpawnRangeY = -10f;
     [SerializeField] private float maxSpawnRangeY = 10f;
+    [Header("SFX")]
+    [SerializeField] private string sfxName = "Knife";
 
     // ====================================================================================================
     //                     Attack Functions
@@ -28,5 +30,7 @@ public class Knife : BaseAttackObject
             transform.localScale.z
         );
     }
+
+    public void PlaySFX() {AudioManager.Instance.PlaySFX(sfxName);}
     #endregion
 }

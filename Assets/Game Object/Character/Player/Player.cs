@@ -12,6 +12,9 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private Transform centerPosition;
     public PlayerSprite playerSprite;
     public PlayerBuffController playerBuffController;
+    [Header("Debug")]
+    [Tooltip("Immune to any damage, default is false")]
+    public bool isImmune = false;
 
     public bool Active
     {
@@ -59,8 +62,8 @@ public class Player : MonoBehaviour, IDamageable
     #region Health
     public void ReceiveDamage(int damageAmount)
     {
-        // Check is active
-        if (!Active) return;
+        // Check is active or immune
+        if (!Active || isImmune) return;
         // Do character die
         CharacterDie();
     }
@@ -70,6 +73,7 @@ public class Player : MonoBehaviour, IDamageable
     private void CharacterDie()
     {
         Debug.Log("player dead");
+        playerBuffController.ClearSpeedEffect();
         OnPlayerDied.Invoke(this, EventArgs.Empty);
     }
     #endregion

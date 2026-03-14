@@ -80,11 +80,13 @@ public class GameoverScreenController : MonoBehaviour
     #region Button
     public void OnRestart()
     {
+        AudioManager.Instance.StopMusic();
         SceneManager.LoadScene(restartTargerSceneName);
     }
 
     public void OnBackToMenu()
     {
+        AudioManager.Instance.StopMusic();
         SceneManager.LoadScene(backToMenuTargetSceneName);
     }
     #endregion

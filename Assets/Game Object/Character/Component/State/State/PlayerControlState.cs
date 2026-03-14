@@ -10,6 +10,8 @@ public class PlayerControlState : BaseState
     [Header("Move")]
     public float maxWalkSpeed = 14f;
     public float speedAcceleration = 120f;
+    [Header("SFX")]
+    [SerializeField] private string moveSfxName = "Walk";
 
     private int facingDirection = 1;
 
@@ -41,6 +43,7 @@ public class PlayerControlState : BaseState
     public override void ExitState()
     {
         playerSprite.DoIdle();
+        AudioManager.Instance.StopSFXLooping();
     }
     public override void UpdateState(){}
     public override void FixedUpdateState()
@@ -48,6 +51,7 @@ public class PlayerControlState : BaseState
         HandleMovement();
         HandleFacingDirection();
         HandleAnimation();
+        HandleSFX();
     }
     #endregion
 
@@ -83,6 +87,12 @@ public class PlayerControlState : BaseState
     {
         if (inputHandler.moveInput != Vector2.zero) playerSprite.DoWalk();
         else playerSprite.DoIdle();
+    }
+
+    private void HandleSFX()
+    {
+        if (inputHandler.moveInput != Vector2.zero) AudioManager.Instance.PlaySFXLooping(moveSfxName);
+        else AudioManager.Instance.StopSFXLooping();
     }
     #endregion
 

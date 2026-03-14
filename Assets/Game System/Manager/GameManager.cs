@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     // System
     [SerializeField] private GameTimer gameTimer;
     [SerializeField] private ProgressionController progressionController;
+    [Header("Music")]
+    [SerializeField] private string survivalMusicName = "Survival";
+    [SerializeField] private float musicFadeDuration = 0.8f;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
         {
             gameTimer.StartGameTimer();
             attackObjectSpawner.ResumeSpawnTimer();
+            AudioManager.Instance.PlayMusic(survivalMusicName);
         };
         uiAnimationController.OnChoreBreakFinished += (object sender, EventArgs e) =>
         {
@@ -70,6 +74,7 @@ public class GameManager : MonoBehaviour
         player.Active = true;
         gameTimer.ResumeGameTimer();
         attackObjectSpawner.ResumeSpawnTimer();
+        AudioManager.Instance.PlayMusic(survivalMusicName);
     }
 
     private void SwitchToChoresPhase()
@@ -78,6 +83,7 @@ public class GameManager : MonoBehaviour
         player.Active = false;
         gameTimer.PauseGameTimer();
         attackObjectSpawner.PauseSpawnTimer();
+        AudioManager.Instance.StopMusic(musicFadeDuration);
         // Play animation
         uiAnimationController.DoChoreBreak();
     }

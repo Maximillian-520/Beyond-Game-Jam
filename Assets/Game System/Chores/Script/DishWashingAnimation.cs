@@ -32,7 +32,6 @@ public class DishWashingAnimation : MonoBehaviour
     private Tween screenDisappearTween;
     private Tween plateAppearTween;
     private Tween plateDisappearTween;
-    private Tween dishWashingResultTween;
 
     // ====================================================================================================
     //                     Virtual Functions

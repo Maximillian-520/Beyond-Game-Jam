@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Rock : BaseAttackObject
@@ -9,6 +10,10 @@ public class Rock : BaseAttackObject
     [SerializeField] private float maxSpawnRangeX = 10f;
     [SerializeField] private float minSpawnRangeY = -10f;
     [SerializeField] private float maxSpawnRangeY = 10f;
+    [Header("SFX")]
+    [SerializeField] private List<string> sfxNameList;
+
+    private int sfxPlayCount = 0;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -18,6 +23,7 @@ public class Rock : BaseAttackObject
     {
         // Assertion check
         Debug.Assert(damageTriggerArea, "damageTriggerArea is missing");
+        Debug.Assert(sfxNameList.Count > 0, "sfxNameList is missing");
     }
     #endregion
 
@@ -35,6 +41,15 @@ public class Rock : BaseAttackObject
         );
     }
 
-    public void TriggerDamage() {damageTriggerArea.TriggerDamage();}
+    public void TriggerDamage()
+    {
+        damageTriggerArea.TriggerDamage();
+        if (sfxPlayCount >= sfxNameList.Count)
+        {
+            AudioManager.Instance.PlaySFX(sfxNameList[sfxPlayCount - 1]);
+        }
+        else AudioManager.Instance.PlaySFX(sfxNameList[sfxPlayCount]);
+        sfxPlayCount++;
+    }
     #endregion
 }

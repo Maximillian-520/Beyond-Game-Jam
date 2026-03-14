@@ -92,8 +92,11 @@ public class PlayerBuffController : MonoBehaviour
     {
         playerControlState.maxWalkSpeed -= speedOffsetAmount;
         speedOffsetAmount = 0;
-        currentSpeedEffectParticle.Stop();
-        currentSpeedEffectParticle = null;
+        if (currentSpeedEffectParticle)
+        {
+            currentSpeedEffectParticle.Stop();
+            currentSpeedEffectParticle = null;
+        }
     }
     #endregion
 }

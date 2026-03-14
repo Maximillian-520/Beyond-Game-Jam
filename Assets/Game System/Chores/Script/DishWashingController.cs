@@ -21,6 +21,9 @@ public class DishWashingController : MonoBehaviour
     [SerializeField] private Plate platePrefab;
     [Header("Dish Washing")]
     [SerializeField] private int gamePlateAmount = 5;
+    [Header("Music")]
+    [SerializeField] private string choresMusicName = "Chores";
+    [SerializeField] private float musicFadeDuration = 0.8f;
 
     // Plate
     private Plate previousPlate;
@@ -107,14 +110,19 @@ public class DishWashingController : MonoBehaviour
         remainingDirtThicknessList.Clear();
         Sponge.Instance.Active = false;
         nextPlateButton.gameObject.SetActive(false);
+        // Start music
+        AudioManager.Instance.PlayMusic(choresMusicName);
         // Start sequence
         dishWashingAnimation.DoScreenAppear();
     }
 
     public void EndMinigame()
     {
+        // Clear minigame
         Sponge.Instance.Active = false;
         dishWashingAnimation.DoScreenDisappear();
+        // Start music
+        AudioManager.Instance.StopMusic(musicFadeDuration);
     }
     #endregion
 

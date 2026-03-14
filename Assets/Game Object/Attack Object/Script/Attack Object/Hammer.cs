@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Hammer : BaseAttackObject
@@ -10,6 +9,8 @@ public class Hammer : BaseAttackObject
     [SerializeField] private float maxSpawnRangeX = 10f;
     [SerializeField] private float minSpawnRangeY = -10f;
     [SerializeField] private float maxSpawnRangeY = 10f;
+    [Header("SFX")]
+    [SerializeField] private string sfxName = "Hammer";
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -45,6 +46,10 @@ public class Hammer : BaseAttackObject
         );
     }
 
-    public void TriggerDamage() {damageTriggerArea.TriggerDamage();}
+    public void TriggerDamage()
+    {
+        damageTriggerArea.TriggerDamage();
+        AudioManager.Instance.PlaySFX(sfxName);
+    }
     #endregion
 }

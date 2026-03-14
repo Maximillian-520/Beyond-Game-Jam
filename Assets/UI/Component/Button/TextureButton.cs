@@ -31,6 +31,8 @@ IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandle
         "Only works when content object is set."
     )]
     [SerializeField] private Vector2 pressedContentOffset;
+    [Header("SFX")]
+    [SerializeField] private string sfxName = "Button";
 
     private Vector2 currentOffset = Vector2.zero;
 
@@ -114,6 +116,8 @@ IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandle
             );
             currentOffset = pressedContentOffset;
         }
+        // Play sfx
+        AudioManager.Instance.PlaySFX(sfxName);
     }
     #endregion
 }
