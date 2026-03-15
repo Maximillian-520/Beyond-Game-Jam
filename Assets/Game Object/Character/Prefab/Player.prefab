@@ -156,7 +156,9 @@ MonoBehaviour:
   stateController: {fileID: 4606013614054887254}
   centerPosition: {fileID: 658282521440566921}
   playerSprite: {fileID: 7210134023812740562}
+  inputHandler: {fileID: 2153690993394931124}
   playerBuffController: {fileID: 1773942579490973804}
+  isImmune: 0
 --- !u!114 &1773942579490973804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5101,6 +5103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveInput: {x: 0, y: 0}
+  punchInput: 0
 --- !u!114 &7724167717596824500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5142,6 +5145,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 08b766c3-d382-4c97-bf7a-b0026af5c2d5
     m_ActionName: 'Movement/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2153690993394931124}
+        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
+        m_MethodName: UpdatePunchInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 53b04c34-8170-451e-9873-70fc5de5fa6a
+    m_ActionName: 'Movement/Punch[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement
@@ -14895,6 +14914,7 @@ MonoBehaviour:
   inputHandler: {fileID: 2153690993394931124}
   maxWalkSpeed: 4
   speedAcceleration: 40
+  moveSfxName: Walk
 --- !u!1 &7356465299813199285
 GameObject:
   m_ObjectHideFlags: 0
@@ -19831,6 +19851,10 @@ PrefabInstance:
       propertyPath: shadow
       value: 
       objectReference: {fileID: 3292887053864523922}
+    - target: {fileID: 4254820760912906036, guid: 871fd7c2094c93942bec43b6f1fc1e3b, type: 3}
+      propertyPath: idleAnimationName
+      value: idle
+      objectReference: {fileID: 0}
     - target: {fileID: 8711184764569554572, guid: 871fd7c2094c93942bec43b6f1fc1e3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private StateController stateController;
     [SerializeField] private Transform centerPosition;
     public PlayerSprite playerSprite;
+    [SerializeField] private InputHandler inputHandler;
     public PlayerBuffController playerBuffController;
     [Header("Debug")]
     [Tooltip("Immune to any damage, default is false")]
@@ -43,8 +44,26 @@ public class Player : MonoBehaviour, IDamageable
         // Assertion Check
         Debug.Assert(stateController, "stateController is missing");
         Debug.Assert(playerSprite, "playerSprite is missing");
+        Debug.Assert(inputHandler, "inputHandler is missing");
         Debug.Assert(centerPosition, "centerPosition is missing");
         Debug.Assert(playerBuffController, "playerBuffController is missing");
+        // Connect events
+        playerSprite.OnPunchAnimationCompleted += (object sender, EventArgs e) =>
+        {
+            stateController.ChangeState(BaseState.StateName.PLAYER_CONTROL);
+        };
+    }
+
+    private void Update()
+    {
+        // Check is active
+        if (!Active) return;
+        // Check if punching
+        if (inputHandler.punchInput)
+        {
+            stateController.ChangeState(BaseState.StateName.IDLE);
+            playerSprite.DoPunch();
+        }
     }
     #endregion
 
@@ -72,6 +91,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void CharacterDie()
     {
+        playerSprite.InteruptAllAnimation();
         playerBuffController.ClearSpeedEffect();
         OnPlayerDied.Invoke(this, EventArgs.Empty);
     }
