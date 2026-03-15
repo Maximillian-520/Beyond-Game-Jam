@@ -2879,6 +2879,8 @@ MonoBehaviour:
   filledIconTexture: {fileID: 21300000, guid: deaa9df75d94b264393ddacb63b634c3, type: 3}
   emptyText: You haven't beaten the game :(
   filledText: You have beaten the game :}
+  emptyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  filledTextColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1135530844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3289,7 +3291,7 @@ GameObject:
   - component: {fileID: 1322552079}
   - component: {fileID: 1322552078}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

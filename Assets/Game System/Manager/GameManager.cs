@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIAnimationController uiAnimationController;
     [SerializeField] private DishWashingController dishWashingController;
     [SerializeField] private GameoverScreenController gameoverScreenController;
+    [SerializeField] private PauseScreenController pauseScreenController;
     // System
     [SerializeField] private GameTimer gameTimer;
     [SerializeField] private ProgressionController progressionController;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(uiAnimationController, "uiAnimationController is missing");
         Debug.Assert(dishWashingController, "dishWashingController is missing");
         Debug.Assert(gameoverScreenController, "gameoverScreenController is missing");
+        Debug.Assert(pauseScreenController, "pauseScreenController is missing");
         Debug.Assert(gameTimer, "gameTimer is missing");
         Debug.Assert(progressionController, "progressionController");
         // Connect events
@@ -59,6 +61,15 @@ public class GameManager : MonoBehaviour
         gameTimer.OnChoresTimerFired += (object sender, EventArgs e) => {SwitchToChoresPhase();};
         // Initialize
         uiAnimationController.DoOpeningSequence();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseScreenController.isGamePaused()) pauseScreenController.ClosePauseScreen();
+            else pauseScreenController.OpenPauseScreen();
+        }
     }
     #endregion
 
@@ -98,7 +109,10 @@ public class GameManager : MonoBehaviour
         if (isPlayerWin) uiAnimationController.DoPlayerWin();
         else uiAnimationController.DoPlayerLose();
         // Save data
-        GameSaveHandler.SaveGameData(new GameData{isEmpty = false, isGameDefeated = true});
+        if (isPlayerWin)
+        {
+            GameSaveHandler.SaveGameData(new GameData{isEmpty = false, isGameDefeated = true});
+        }
     }
     #endregion
 }
