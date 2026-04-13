@@ -8,7 +8,7 @@ public class ParallaxLayer : MonoBehaviour
     [Header("Scroll Settings")]
     [Tooltip(
         "Distance from the anchor position before the layer repeats (loops)." +
-        "Will not repeat if set to 0"
+        "Will not repeat if set to 0."
     )]
     [SerializeField] private Vector2 repeatSize = new Vector2(0, 0);
     [Tooltip("Automatic scrolling speed of the layer in units per second")]
