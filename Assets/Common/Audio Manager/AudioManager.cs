@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class AudioManager : MonoBehaviour
     {
         public string name;
         public AudioClip audioClip;
+        [Range(0.0f, 1.0f)] public float volume;
+        [Range(-3.0f, 3.0f)] public float pitch;
     }
 
     public static AudioManager Instance {private set; get;}
@@ -21,16 +24,35 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
     [Tooltip("Audio source for SFX looping")]
     [SerializeField] private AudioSource sfxLoopingSource;
-    [Header("Audio Settings")]
-    [Tooltip("List of audio data for music, audio assets need to be listed here before being used")]
+    // ====================================================================================================
+    [Header("Audio Mixer")]
+    [Tooltip("Target audio mixer for audio setings")]
+    [SerializeField] private AudioMixer audioMixer;
+    [Tooltip("Music volume exposed parameter name in the audio mixer")]
+    [SerializeField] private string musicVolumeParameterName = "MusicVolume";
+    [Tooltip("SFX volume exposed parameter name in the audio mixer")]
+    [SerializeField] private string sfxVolumeParameterName = "SFXVolume";
+    // ====================================================================================================
+    [Header("Audio List")]    
+    [Tooltip(
+        "List of audio data for music, audio assets need to be listed here before being used.\n" +
+        "<b>Default values for volume and pitch are 1.0</b>"
+    )]
     [SerializeField] private AudioData[] musicAudioDataList;
-    [Tooltip("List of audio data for SFX, audio assets need to be listed here before being used")]
+    [Tooltip(
+        "List of audio data for SFX, audio assets need to be listed here before being used.\n" +
+        "<b>Default values for volume and pitch are 1.0</b>"
+    )]
     [SerializeField] private AudioData[] sfxAudioDataList;
 
     private float musicVolume = 1.0f;
     private float sfxVolume = 1.0f;
     private Tween musicFadeTween;
     private string currentSFXLoopingName;
+
+    public AudioManager()
+    {
+    }
 
     // ====================================================================================================
     //                     Virtual Methods
@@ -52,6 +74,9 @@ public class AudioManager : MonoBehaviour
         Debug.Assert(musicSource, "musicSource is missing");
         Debug.Assert(sfxSource, "sfxSource is missing");
         Debug.Assert(sfxLoopingSource, "sfxLoopingSource is missing");
+        Debug.Assert(audioMixer, "audioMixer is empty");
+        // Initialize
+        if (sfxLoopingSource) sfxLoopingSource.loop = true;
     }
     #endregion
 
@@ -72,7 +97,8 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.loop = isLoop;
             musicSource.clip = audioData.audioClip;
-            musicSource.volume = musicVolume;
+            musicSource.volume = audioData.volume;
+            musicSource.pitch = audioData.pitch;
             musicSource.Play();
         }
     }
@@ -89,6 +115,7 @@ public class AudioManager : MonoBehaviour
             // Play audio
             musicSource.loop = isLoop;
             musicSource.clip = audioData.audioClip;
+            musicSource.pitch = audioData.pitch;
             musicSource.Play();
             // Set fade
             musicSource.volume = 0.0f;
@@ -96,20 +123,16 @@ public class AudioManager : MonoBehaviour
             musicFadeTween = DOTween.To(
                 () => {return musicSource.volume;},
                 (float value) => {musicSource.volume = value;},
-                musicVolume,
+                audioData.volume,
                 fadeDuration
             );
         }
     }
 
-    public void StopMusic()
-    {
-        musicSource.Stop();
-    }
+    public void StopMusic() {musicSource.Stop();}
     public void StopMusic(float fadeDuration)
     {
         // Set fade
-        musicSource.volume = musicVolume;
         if (!musicFadeTween.IsUnityNull()) musicFadeTween.Kill();
         musicFadeTween = DOTween.To(
             () => {return musicSource.volume;},
@@ -122,13 +145,10 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         musicVolume = volume;
-        musicSource.volume = volume;
+        audioMixer.SetFloat(musicVolumeParameterName, LinearToDecibles(volume));
     }
 
-    public void SetMusicMute(bool isMute)
-    {
-        musicSource.mute = isMute;
-    }
+    public void SetMusicMute(bool isMute) {musicSource.mute = isMute;}
     #endregion
 
     // ====================================================================================================
@@ -144,7 +164,7 @@ public class AudioManager : MonoBehaviour
         // Check if data was found
         if (audioData.IsUnityNull()) Debug.Log($"SFX of: {audioName}, was not found");
         // Play audio
-        else sfxSource.PlayOneShot(audioData.audioClip);
+        else sfxSource.PlayOneShot(audioData.audioClip, audioData.volume);
     }
 
     public void PlaySFXLooping(string audioName, bool isOverride = false)
@@ -162,7 +182,8 @@ public class AudioManager : MonoBehaviour
         {
             sfxLoopingSource.loop = true;
             sfxLoopingSource.clip = audioData.audioClip;
-            sfxLoopingSource.volume = sfxVolume;
+            sfxLoopingSource.volume = audioData.volume;
+            sfxLoopingSource.pitch = audioData.pitch;
             sfxLoopingSource.Play();
             currentSFXLoopingName = audioName;
         }
@@ -183,12 +204,21 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         sfxVolume = volume;
-        sfxSource.volume = volume;
+        audioMixer.SetFloat(sfxVolumeParameterName, LinearToDecibles(volume));
     }
 
-    public void SetSFXMute(bool isMute)
+    public void SetSFXMute(bool isMute) {sfxSource.mute = isMute;}
+    #endregion
+
+    // ====================================================================================================
+    //                     Helper Methods
+    // ====================================================================================================
+    #region Helper
+    // Convert a linear value (0.0 - 1.0) to decibels
+    private float LinearToDecibles(float linear)
     {
-        sfxSource.mute = isMute;
+        if (linear <= 0f) return -80f;
+        return 20f * Mathf.Log10(linear);
     }
     #endregion
 }

@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 4762878334664418501}
   - component: {fileID: 4148833950596256604}
   m_Layer: 0
-  m_Name: Audio Manager
+  m_Name: Main Audio Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -305,14 +305,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3901f0511177c4458433817d49f6089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
-  sfxLoopingSource: {fileID: 0}
-  audioMixer: {fileID: 0}
+  musicSource: {fileID: 6929537856817389715}
+  sfxSource: {fileID: 879031773259932288}
+  sfxLoopingSource: {fileID: 2221427315649088752}
+  audioMixer: {fileID: 24100000, guid: a58fa664affd475448e424abfa49d4ae, type: 2}
   musicVolumeParameterName: MusicVolume
   sfxVolumeParameterName: SFXVolume
-  musicAudioDataList: []
-  sfxAudioDataList: []
+  musicAudioDataList:
+  - name: MainMenu
+    audioClip: {fileID: 8300000, guid: 20182895f4a76474c877e17237935478, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Survival
+    audioClip: {fileID: 8300000, guid: 1e6a93789adf4254a8c0f3161cccaff0, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Chores
+    audioClip: {fileID: 8300000, guid: 37226c0ad0da7144baa3c5a095c6700f, type: 3}
+    volume: 1
+    pitch: 1
+  sfxAudioDataList:
+  - name: Walk
+    audioClip: {fileID: 8300000, guid: e01309b66e6e63b4ab2e7bd412ba06fc, type: 3}
+    volume: 1
+    pitch: 0
+  - name: Knife
+    audioClip: {fileID: 8300000, guid: 33572aa2d033d2c4f9df946e3c944832, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Hammer
+    audioClip: {fileID: 8300000, guid: 325ec28abb584b343b4456e3bada2534, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Rock1
+    audioClip: {fileID: 8300000, guid: 9e0bd3f4081e7424ea98a8409626a76a, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Rock2
+    audioClip: {fileID: 8300000, guid: 644d9a5ba3ededf4ea0bc48cf1a87d46, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Rock3
+    audioClip: {fileID: 8300000, guid: c4687e83b870f8341998843bc09bd3c3, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Sponge
+    audioClip: {fileID: 8300000, guid: bfbac84e0d296b048889122410f7ed35, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Button
+    audioClip: {fileID: 8300000, guid: acf110f4b52376846b65beac269ca056, type: 3}
+    volume: 1
+    pitch: 0
 --- !u!1 &7866501725904230587
 GameObject:
   m_ObjectHideFlags: 0
