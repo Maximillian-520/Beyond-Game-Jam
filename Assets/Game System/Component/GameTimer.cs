@@ -69,14 +69,22 @@ public class GameTimer : MonoBehaviour
         isGameTimerActive = false;
         isChoresTimerActive = false;
     }
+    
+    private void ResetChoresTimer()
+    {
+        choresTimer = UnityEngine.Random.Range(minChoresTime, maxChoresTime);
+    }
+
+    public void SetGameTime(float newGameTime, float newMinChoresTime, float newMaxChoresTime)
+    {
+        gameTime = newGameTime;
+        minChoresTime = newMinChoresTime;
+        maxChoresTime = newMaxChoresTime;
+    }
 
     public float GetGameTimerNormalized() {return gameTimer / gameTime;}
     
     public bool IsGameTimerRunning() {return isGameTimerActive;}
 
-    private void ResetChoresTimer()
-    {
-        choresTimer = UnityEngine.Random.Range(minChoresTime, maxChoresTime);
-    }
     #endregion
 }

@@ -1,13 +1,26 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ProgressionController : MonoBehaviour
 {
+    public enum DifficultyName
+    {
+        EASY,
+        NORMAL,
+        HARD,
+    }
+
+    public static DifficultyName currentDifficulty;
+
     [Header("Component and Object")]
     [SerializeField] private AttackObjectSpawner attackObjectSpawner;
+    [SerializeField] private GameTimer gameTimer;
     [Header("Progression")]
-    [SerializeField] private List<ProgressionData> progressionDataList;
+    [SerializeField] private ProgressionData easyDifficultyData;
+    [SerializeField] private ProgressionData normalDifficultyData;
+    [SerializeField] private ProgressionData hardDifficultyData;
+
+    private ProgressionData currentProgressionData;
 
     int currentProgressionLevel = 0;
 
@@ -19,9 +32,33 @@ public class ProgressionController : MonoBehaviour
     {
         // Assertion check
         Debug.Assert(attackObjectSpawner, "attackObjectSpawner is missing");
-        Debug.Assert(progressionDataList.Count > 0, "progressionDataList is missing");
+        Debug.Assert(gameTimer, "gameTimer is missing");
+        Debug.Assert(easyDifficultyData, "easyDifficultyData is empty");
+        Debug.Assert(
+            easyDifficultyData.spawnDataList.Count > 0, "easyDifficultyData spawnDataList is missing"
+        );
+        Debug.Assert(normalDifficultyData, "normalDifficultyData is empty");
+        Debug.Assert(
+            normalDifficultyData.spawnDataList.Count > 0, "normalDifficultyData spawnDataList is missing"
+        );
+        Debug.Assert(hardDifficultyData, "hardDifficultyData is empty");
+        Debug.Assert(
+            hardDifficultyData.spawnDataList.Count > 0, "hardDifficultyData spawnDataList is missing"
+        );
+        // Set progression data
+        switch (currentDifficulty)
+        {
+            case DifficultyName.EASY:{currentProgressionData = easyDifficultyData; break;}
+            case DifficultyName.NORMAL:{currentProgressionData = normalDifficultyData; break;}
+            case DifficultyName.HARD:{currentProgressionData = hardDifficultyData; break;}
+        }
         // Initialize
-        SetProgressionData(progressionDataList[0]);
+        SetSpawnData(currentProgressionData.spawnDataList[0]);
+        gameTimer.SetGameTime(
+            currentProgressionData.gameTime,
+            currentProgressionData.minChoresTime,
+            currentProgressionData.maxChoresTime
+        );
     }
     #endregion
 
@@ -34,23 +71,16 @@ public class ProgressionController : MonoBehaviour
         // Increment level
         currentProgressionLevel++;
         // Get progression data
-        int listIndex = Math.Min(currentProgressionLevel, progressionDataList.Count - 1);
-        ProgressionData progressionData = progressionDataList[listIndex];
+        int listIndex = Math.Min(currentProgressionLevel, currentProgressionData.spawnDataList.Count - 1);
+        SpawnData spawnData = currentProgressionData.spawnDataList[listIndex];
         // Set progression data
-        SetProgressionData(progressionData);
+        SetSpawnData(spawnData);
     }
 
-    private void SetProgressionData(ProgressionData progressionLevelData)
+    private void SetSpawnData(SpawnData spawnData)
     {
-        attackObjectSpawner.minSpawnTime = progressionLevelData.minSpawnTime;
-        attackObjectSpawner.maxSpawnTime = progressionLevelData.maxSpawnTime;
+        attackObjectSpawner.minSpawnTime = spawnData.minSpawnTime;
+        attackObjectSpawner.maxSpawnTime = spawnData.maxSpawnTime;
     }
     #endregion
-}
-
-[Serializable]
-public struct ProgressionData
-{
-    public float minSpawnTime;
-    public float maxSpawnTime;
 }

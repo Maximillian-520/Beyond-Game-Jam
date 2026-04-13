@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance {private set; get;}
+
     [Header("Component and Object")]
     // Game Object
     [SerializeField] private Player player;
@@ -17,11 +19,17 @@ public class GameManager : MonoBehaviour
     [Header("Music")]
     [SerializeField] private string survivalMusicName = "Survival";
     [SerializeField] private float musicFadeDuration = 0.8f;
+    [Header("Debug")]
+    public DebugData debugData;
 
     // ====================================================================================================
     //                     Virtual Functions
     // ====================================================================================================
     #region Virtual
+    private void Awake() {Instance = this;}
+
+    private void OnDestroy() {Instance = null;}
+
     private void Start()
     {
         // Assertion check
@@ -32,7 +40,8 @@ public class GameManager : MonoBehaviour
         Debug.Assert(gameoverScreenController, "gameoverScreenController is missing");
         Debug.Assert(pauseScreenController, "pauseScreenController is missing");
         Debug.Assert(gameTimer, "gameTimer is missing");
-        Debug.Assert(progressionController, "progressionController");
+        Debug.Assert(progressionController, "progressionController is missing");
+        Debug.Assert(debugData, "debugData is empty");
         // Connect events
         player.OnPlayerDied += (object sender, EventArgs e) => {EndGame(false);};
         uiAnimationController.OnOpeningSequenceFinished += (object sender, EventArgs e) =>
@@ -60,6 +69,10 @@ public class GameManager : MonoBehaviour
         gameTimer.OnGameTimerFinished += (object sender, EventArgs e) => {EndGame(true);};
         gameTimer.OnChoresTimerFired += (object sender, EventArgs e) => {SwitchToChoresPhase();};
         // Initialize
+        #if !UNITY_EDITOR
+        debugData = new DebugData();
+        #endif
+        if (!debugData.gameStartOnAwake) return;
         uiAnimationController.DoOpeningSequence();
     }
 

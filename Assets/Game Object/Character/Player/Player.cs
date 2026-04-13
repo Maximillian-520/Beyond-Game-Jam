@@ -13,9 +13,6 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerSprite playerSprite;
     [SerializeField] private InputHandler inputHandler;
     public PlayerBuffController playerBuffController;
-    [Header("Debug")]
-    [Tooltip("Immune to any damage, default is false")]
-    public bool isImmune = false;
 
     public bool Active
     {
@@ -82,7 +79,8 @@ public class Player : MonoBehaviour, IDamageable
     public void ReceiveDamage(int damageAmount)
     {
         // Check is active or immune
-        if (!Active || isImmune) return;
+        if (!Active) return;
+        if (GameManager.Instance.debugData.playerImmune) return;
         // Do character die
         CharacterDie();
     }
