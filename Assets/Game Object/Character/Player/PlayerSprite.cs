@@ -52,9 +52,9 @@ public class PlayerSprite : MonoBehaviour
         }
     }
 
-    public void DoIdle() {animator.SetBool("isWalking", false);}
+    public void DoIdle() {animator.SetBool("isMoving", false);}
 
-    public void DoWalk() {animator.SetBool("isWalking", true);}
+    public void DoWalk() {animator.SetBool("isMoving", true);}
 
     public void DoPunch() {animator.Play(punchAnimationName);}
 
