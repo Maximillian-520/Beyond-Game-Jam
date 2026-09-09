@@ -1,0 +1,1 @@
+Old state machine system used for player and NPC. It's currently unused.

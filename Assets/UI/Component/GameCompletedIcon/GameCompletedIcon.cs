@@ -27,8 +27,8 @@ public class GameCompletedIcon : MonoBehaviour, IPointerEnterHandler, IPointerEx
         Debug.Assert(descriptionText, "descriptionText is missing");
         Debug.Assert(emptyIconTexture, "emptyIconTexture is empty");
         Debug.Assert(filledIconTexture, "filledIconTexture is empty");
-        Debug.Assert(emptyText == "", "emptyText is empty");
-        Debug.Assert(filledText == "", "filledText is empty");
+        Debug.Assert(emptyText != "", "emptyText is empty");
+        Debug.Assert(filledText != "", "filledText is empty");
         // Set icon image and description
         GameData gameData = GameSaveHandler.LoadGameData();
         if (!gameData.isEmpty && gameData.isGameDefeated)

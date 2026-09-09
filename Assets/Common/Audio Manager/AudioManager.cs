@@ -50,10 +50,6 @@ public class AudioManager : MonoBehaviour
     private Tween musicFadeTween;
     private string currentSFXLoopingName;
 
-    public AudioManager()
-    {
-    }
-
     // ====================================================================================================
     //                     Virtual Methods
     // ====================================================================================================
