@@ -1,6 +1,6 @@
 # Household Chaos and Chores
 
-A chaotic survival and chores game where you must stay alive in a flying-and-falling-object nightmare while doing chores. The game blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between escaping incoming threats and completing household tasks.
+<p align="justify">A chaotic survival and chores game where you must stay alive in a flying-and-falling-object nightmare while doing chores. The game blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between escaping incoming threats and completing household tasks.</p>
 
 ## Overview
 
@@ -91,32 +91,33 @@ Each difficulty selects a different `ProgressionData` asset, which controls:
 
 ## Gameplay Flow
 
-### Startup Flow
-1. The player opens the main menu.
-2. The player selects a difficulty.
-3. `MainMenuController` loads the `GameScene`.
-4. `GameManager` runs its start logic and asserts required references.
-5. The opening sequence UI plays.
-6. The survival phase begins, music starts, the timer starts, and spawners activate.
+```mermaid
+flowchart TD
+    A[Main Menu] --> B[Select Difficulty]
+    B --> C[Load GameScene]
+    C --> D[GameManager Start]
+    D --> E[Opening Sequence UI]
+    E --> F[Survival Phase Begins]
+    F --> G[GameTimer Runs]
+    G --> H[AttackObjectSpawner Spawns Hazards]
+    H --> I{Chores Timer Triggered?}
+    I -- Yes --> J[Switch to Chores Phase]
+    J --> K[UIAnimationController DoChoreBreak]
+    K --> L[DishWashingController StartMinigame]
+    L --> M[Player Cleans Plates]
+    M --> N[Calculate Dish Result]
+    N --> O[Return to Survival Phase]
+    O --> P[ProgressionController NextProgressionLevel]
+    P --> Q[Spawn Timing Increases]
+    Q --> G
 
-### Main Game Loop
-1. `GameTimer` counts down the primary survival timer.
-2. `AttackObjectSpawner` repeatedly instantiates attack objects.
-3. The player can fight, dodge, or take damage.
-4. When the chores timer reaches zero, the game switches to the chore phase.
+    G --> R{Main Timer Finished?}
+    R -- Yes --> S[End Game]
+    S --> T{Player Won?}
+    T -- Yes --> U[Open Win Screen]
+    T -- No --> V[Open Lose Screen]
 
-### Chore Break Flow
-1. `GameManager.SwitchToChoresPhase()` disables the player and pauses other survival systems.
-2. `UIAnimationController.DoChoreBreak()` plays the chore transition animation.
-3. `DishWashingController.StartMinigame()` displays the dish-washing UI.
-4. The player cleans plates and the result is calculated.
-5. `DishWashingController` ends the minigame and `GameManager` resumes survival gameplay.
+    I -- No --> H
+```
 
-### Progression Flow
-1. After a chore minigame, `ProgressionController.NextProgressionLevel()` advances the current progression level.
-2. Spawn timing becomes more difficult for the next survival phase.
-3. The loop continues until the session ends.
-
-### End Game Flow
-- If the player loses, `Player.ReceiveDamage()` triggers `OnPlayerDied`, and `GameManager.EndGame(false)` opens the lose screen.
-- If the main timer ends, `GameManager.EndGame(true)` opens the win screen and saves the result.
+<p align="justify">The flow above summarizes the main loop of the game: start from the menu, enter survival, trigger chore breaks at intervals, increase difficulty through progression, and end the run with a win or loss state.</p>
