@@ -123,5 +123,4 @@ flowchart TD
 
 ## Additional Info
 <p align="justify">This project was made by myself using both photographed real-life things and free online assets. This game was submitted to Beyond Game Jam 2026: BiasBreaker.</p>
-<img width="100%" src="assets/game_banner/household_chaos_and_chores.gif" alt="household_chaos_and_chores"/><br>
-<a href="https://maximillian520.itch.io/household-chaos-and-chores">itch.io</a>
+Game page: <a href="https://maximillian520.itch.io/household-chaos-and-chores">itch.io</a>
