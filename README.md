@@ -1,4 +1,4 @@
-# Household Chaos and Chores
+<h1 align="center">🏃 Household Chaos and Chores 🍽️</h1>
 
 <p align="justify">A chaotic survival and chores game where you must stay alive in a flying-and-falling-object nightmare while doing chores. The game blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between escaping incoming threats and completing household tasks.</p>
 
@@ -45,7 +45,7 @@ Each difficulty selects a different `ProgressionData` asset, which controls:
 
 ## Main Modules and Components
 
-### Game System
+### Game System and Progression
 
 | Component | Purpose | Key Responsibilities |
 | --- | --- | --- |
@@ -58,8 +58,7 @@ Each difficulty selects a different `ProgressionData` asset, which controls:
 
 | Component | Purpose | Key Responsibilities |
 | --- | --- | --- |
-| `Player` | Main playable character | Handles input-based combat checks, state changes, damage logic, and buff behavior |
-| `StateController` | State machine for player behavior | Maps state names to state components and switches between them cleanly |
+| `Player` | Main playable character | Handles input-based movement, state changes, damage logic, and buff behavior |
 | `AttackObjectSpawner` | Produces incoming hazards | Spawns randomized attack objects and controls spawn timing |
 | `BaseAttackObject` | Shared base for spawned hazards | Defines the common initialization and despawn contract for attack objects |
 
@@ -87,7 +86,7 @@ Each difficulty selects a different `ProgressionData` asset, which controls:
 | `MainMenuController` | Main menu navigation | Handles menu panels, difficulty selection, scene loading, and quit behavior |
 | `PauseScreenController` | Pause screen flow | Opens and closes the pause menu during gameplay |
 | `GameoverScreenController` | End-state screen handling | Displays win/lose screens after a run ends |
-| `UIAnimationController` | UI sequence orchestration | Runs intro, chore break, win, and lose animations |
+| `UIAnimationController` | UI animation sequence orchestrator | Runs intro, chore break, win, and lose animations |
 
 ## Gameplay Flow
 
@@ -99,6 +98,12 @@ flowchart TD
     D --> E[Opening Sequence UI]
     E --> F[Survival Phase Begins]
     F --> G[GameTimer Runs]
+    G --> R{Main Timer Finished?}
+    R -- Yes --> S[End Game]
+    S --> T{Player Won?}
+    T -- Yes --> U[Open Win Screen]
+    T -- No --> V[Open Lose Screen]
+
     G --> H[AttackObjectSpawner Spawns Hazards]
     H --> I{Chores Timer Triggered?}
     I -- Yes --> J[Switch to Chores Phase]
@@ -111,13 +116,12 @@ flowchart TD
     P --> Q[Spawn Timing Increases]
     Q --> G
 
-    G --> R{Main Timer Finished?}
-    R -- Yes --> S[End Game]
-    S --> T{Player Won?}
-    T -- Yes --> U[Open Win Screen]
-    T -- No --> V[Open Lose Screen]
-
     I -- No --> H
 ```
 
 <p align="justify">The flow above summarizes the main loop of the game: start from the menu, enter survival, trigger chore breaks at intervals, increase difficulty through progression, and end the run with a win or loss state.</p>
+
+## Additional Info
+<p align="justify">This project was made by myself using both photographed real-life things and free online assets. This game was submitted to Beyond Game Jam 2026: BiasBreaker.</p>
+<img width="100%" src="assets/game_banner/household_chaos_and_chores.gif" alt="household_chaos_and_chores"/><br>
+<a href="https://maximillian520.itch.io/household-chaos-and-chores">itch.io</a>
