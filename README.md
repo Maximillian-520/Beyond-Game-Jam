@@ -1,13 +1,13 @@
 # Household Chaos and Chores
 
-A Unity 2D game prototype built around a loop of survival combat, chore breaks, and progression. The project blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between fighting incoming threats and completing household tasks.
+A chaotic survival and chores game where you must stay alive in a flying-and-falling-object nightmare while doing chores. The game blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between escaping incoming threats and completing household tasks.
 
 ## Overview
 
-This project is organized as a simple modular Unity codebase with clear responsibilities:
+This project is primarily organized through these corresponding folder roots:
 
-- `Assets/Game System` handles the core game loop, progression, timers, and flow control.
 - `Assets/Game Object` contains the player, enemies/attack objects, and the character state system.
+- `Assets/Game System` handles the core game loop, progression, timers, and flow control.
 - `Assets/Common` contains reusable systems such as audio, saving, camera, and settings.
 - `Assets/UI` contains menu screens, HUD, win/lose flows, and UI animation handling.
 - `Assets/Scenes` contains the main menu and gameplay scenes.
@@ -15,22 +15,20 @@ This project is organized as a simple modular Unity codebase with clear responsi
 ## Key Features
 
 ### 1. Survival Phase
-The main gameplay loop is a survival section where the player is active and must avoid or defeat incoming attack objects. The project uses:
+The main gameplay loop is a survival section where the player is active and must avoid incoming attack objects. The phase uses:
 
-- a `Player` controller with state-based behavior
-- an `AttackObjectSpawner` that creates random projectiles/objects over time
-- a `GameTimer` for overall session timing
-- a `ProgressionController` that adjusts spawn behavior as the game advances
+- `Player` controller with state-based behavior
+- `AttackObjectSpawner` that creates random projectiles/objects over time
+- `GameTimer` for overall session timing
+- `ProgressionController` that adjusts spawn behavior as the game advances
 
 ### 2. Chore Break Minigame
 At set intervals, the game pauses the survival phase and launches a dish-washing mini-game:
 
-- the player is temporarily disabled in survival mode
-- a chore-break UI sequence plays
+- The player is temporarily disabled in survival mode
+- A chore-break UI sequence plays
 - `DishWashingController` spawns plates, tracks remaining dirt, and calculates a result
-- the minigame ends with a speed effect based on how clean the plates were
-
-This creates a rhythm of survival -> chore break -> tougher survival loop.
+- The minigame ends with a speed effect based on how clean the plates were
 
 ### 3. Difficulty and Progression
 The game supports multiple difficulty modes through `ProgressionController`:
@@ -41,120 +39,55 @@ The game supports multiple difficulty modes through `ProgressionController`:
 
 Each difficulty selects a different `ProgressionData` asset, which controls:
 
-- total game time
-- chore break timing range
-- spawn timing ranges for each progression level
-
-### 4. Audio and UI Flow
-The project includes a centralized audio system and animated UI transitions:
-
-- `AudioManager` manages music and SFX, including fade transitions
-- `UIAnimationController` triggers opening, chore break, win, and lose sequences
-- `MainMenuController`, `PauseScreenController`, and `GameoverScreenController` drive the menu and screen flow
-
-### 5. Save Data
-The project includes a simple persistent save system:
-
-- `GameSaveHandler` writes and loads `GameData`
-- current save data tracks whether a run exists and whether the player was defeated
+- Total game time
+- Chore break interval range
+- Spawn timing ranges for each progression level
 
 ## Main Modules and Components
 
 ### Game System
 
-#### `GameManager`
-The central coordinator of the project. It:
-
-- connects the systems together
-- starts the opening sequence
-- switches between survival and chore phases
-- ends the game on win or loss
-- controls pause behavior and game-wide state
-
-#### `GameTimer`
-Handles the main time-based state transitions:
-
-- countdown timer for the full session
-- random chore break timer
-- start, pause, and resume behavior
-
-#### `ProgressionController`
-Controls progression scaling:
-
-- picks difficulty data
-- advances through spawn configurations after each chore minigame
-- updates object spawn timing dynamically
-
-#### `ProgressionData`
-A ScriptableObject container for progression settings such as:
-
-- game duration
-- chore interval range
-- spawn timing data per level
+| Component | Purpose | Key Responsibilities |
+| --- | --- | --- |
+| `GameManager` | Central coordinator for the whole game loop | Connects systems, starts opening sequence, switches survival/chore phases, ends runs, handles pause state |
+| `GameTimer` | Controls the main time-based gameplay loop | Tracks the main countdown, chore-break timer, and start/pause/resume timing |
+| `ProgressionController` | Applies difficulty and stage scaling | Chooses difficulty data, advances progression levels, updates spawn timings |
+| `ProgressionData` | ScriptableObject for tuning balance | Stores game time, chore interval ranges, and per-level spawn timing data |
 
 ### Game Objects
 
-#### `Player`
-The main character controller. It contains:
-
-- input-driven combat checks
-- state changes via `StateController`
-- health/damage handling
-- player buff effects and sprite animation callbacks
-
-#### `StateController`
-A lightweight state machine that enables simple state-driven behavior for the player. It maps state names to concrete state components and switches between them cleanly.
-
-#### `AttackObjectSpawner`
-Spawns randomized attack objects from a configured prefab list and controls the spawn timer.
-
-#### `BaseAttackObject`
-Base class for spawned attack objects. Concrete implementations such as `Hammer`, `Knife`, and `Rock` extend this class.
+| Component | Purpose | Key Responsibilities |
+| --- | --- | --- |
+| `Player` | Main playable character | Handles input-based combat checks, state changes, damage logic, and buff behavior |
+| `StateController` | State machine for player behavior | Maps state names to state components and switches between them cleanly |
+| `AttackObjectSpawner` | Produces incoming hazards | Spawns randomized attack objects and controls spawn timing |
+| `BaseAttackObject` | Shared base for spawned hazards | Defines the common initialization and despawn contract for attack objects |
 
 ### Chores System
 
-#### `DishWashingController`
-Responsible for running the dish-washing minigame:
-
-- spawns plates
-- tracks completed plates
-- calculates remaining dirt
-- shows a result screen
-- ends the minigame and returns control to the main game loop
-
-#### `DishWashingAnimation`
-Handles visual sequencing for the minigame UI and plate transitions.
-
-#### `DishWashingResult`
-Displays the final cleanliness result and applies the resulting gameplay effect.
+| Component | Purpose | Key Responsibilities |
+| --- | --- | --- |
+| `DishWashingController` | Runs the chore minigame | Spawns plates, tracks progress, calculates remaining dirt, and ends the minigame |
+| `DishWashingAnimation` | Manages chore UI animation flow | Handles plate appearance/disappearance and minigame visual timing |
+| `DishWashingResult` | Displays the result of the chore task | Shows cleanliness results and applies the resulting speed effect |
 
 ### Common Systems
 
-#### `AudioManager`
-Manages music and SFX through dedicated audio sources and mixer parameters.
-
-#### `GameSaveHandler`
-Simple JSON-based save utility used to persist game data.
-
-#### `CameraFollow`
-Provides basic camera follow behavior for the player.
-
-#### `ParallaxController` / `ParallaxLayer`
-Used for background movement and layered parallax effects.
+| Component | Purpose | Key Responsibilities |
+| --- | --- | --- |
+| `AudioManager` | Centralized audio system | Plays music and SFX, supports volume/mute settings, and fades music transitions |
+| `GameSaveHandler` | Simple save/load utility | Writes and reads persistent JSON save data for game progress |
+| `CameraFollow` | Camera behavior | Keeps the camera aligned with the player during gameplay |
+| `ParallaxController` / `ParallaxLayer` | Background movement effects | Creates layered parallax motion for the scene |
 
 ### UI
 
-#### `MainMenuController`
-Handles the menu screens, difficulty selection, and scene transitions.
-
-#### `PauseScreenController`
-Manages pause screen open/close behavior.
-
-#### `GameoverScreenController`
-Handles win and lose screen display.
-
-#### `UIAnimationController`
-Coordinates UI animations for intro, chore breaks, and ending states.
+| Component | Purpose | Key Responsibilities |
+| --- | --- | --- |
+| `MainMenuController` | Main menu navigation | Handles menu panels, difficulty selection, scene loading, and quit behavior |
+| `PauseScreenController` | Pause screen flow | Opens and closes the pause menu during gameplay |
+| `GameoverScreenController` | End-state screen handling | Displays win/lose screens after a run ends |
+| `UIAnimationController` | UI sequence orchestration | Runs intro, chore break, win, and lose animations |
 
 ## Gameplay Flow
 
@@ -187,73 +120,3 @@ Coordinates UI animations for intro, chore breaks, and ending states.
 ### End Game Flow
 - If the player loses, `Player.ReceiveDamage()` triggers `OnPlayerDied`, and `GameManager.EndGame(false)` opens the lose screen.
 - If the main timer ends, `GameManager.EndGame(true)` opens the win screen and saves the result.
-
-## Scene Structure
-
-### `MainMenuScene`
-Used for:
-
-- difficulty selection
-- settings view
-- credits view
-- quit handling
-
-### `GameScene`
-Contains the active gameplay scene, including:
-
-- the player
-- spawner systems
-- timer/UI elements
-- chore minigame content
-- UI animation controller
-
-## Suggested Project Structure
-
-```text
-Beyond Game Jam/
-├─ Assets/
-│  ├─ Common/
-│  ├─ Game Object/
-│  ├─ Game System/
-│  ├─ Scenes/
-│  ├─ UI/
-│  └─ ...
-├─ Packages/
-├─ ProjectSettings/
-├─ Build/
-├─ Library/
-├─ Logs/
-├─ Temp/
-├─ UserSettings/
-├─ Assembly-CSharp.csproj
-├─ Beyond Game Jam.slnx
-├─ README.md
-└─ .gitignore
-```
-
-## Notes for Contributors
-
-- Most major systems are already connected through serialized references in `GameManager`.
-- The project uses Unity’s built-in animation and UI systems, plus DOTween for tweening and the Input System for player input.
-- `ProgressionData` assets are the main place to tune difficulty balance and pacing.
-- `DebugData` can be used to quickly toggle debug behavior during development.
-
-## License
-
-This project currently does not include a license file. If you intend to publish or share it publicly, consider adding a license such as MIT or GPL before releasing the repository.
-
-## Quick Start
-
-1. Open the project in Unity.
-2. Load `MainMenuScene` to start from the menu.
-3. Select a difficulty and begin the run.
-4. Iterate on spawn timings, chore timing, and balance values via `ProgressionData` and `GameManager` references.
-
-## Useful Files to Explore First
-
-- `Assets/Game System/Manager/GameManager.cs`
-- `Assets/Game System/Progression/ProgressionController.cs`
-- `Assets/Game System/Chores/Script/DishWashingController.cs`
-- `Assets/Game Object/Character/Player/Player.cs`
-- `Assets/Common/Audio Manager/AudioManager.cs`
-- `Assets/UI/Main Menu Scene/MainMenuController.cs`
