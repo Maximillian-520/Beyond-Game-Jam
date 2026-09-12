@@ -45,6 +45,57 @@ Each difficulty selects a different `ProgressionData` asset, which controls:
 
 ## Main Modules and Components
 
+```mermaid
+flowchart LR
+    subgraph GS[Game System]
+        GM[GameManager]
+        GT[GameTimer]
+        PC[ProgressionController]
+        PD[ProgressionData]
+    end
+
+    subgraph GO[Game Objects]
+        P[Player]
+        AS[AttackObjectSpawner]
+        BO[BaseAttackObject]
+    end
+
+    subgraph CH[Chores System]
+        DC[DishWashingController]
+        DA[DishWashingAnimation]
+        DR[DishWashingResult]
+    end
+
+    subgraph CM[Common Systems]
+        AM[AudioManager]
+        SH[GameSaveHandler]
+        CF[CameraFollow]
+        PAR[ParallaxController / ParallaxLayer]
+    end
+
+    subgraph UI[UI]
+        MM[MainMenuController]
+        PS[PauseScreenController]
+        GO2[GameoverScreenController]
+        UIA[UIAnimationController]
+    end
+
+    MM --> GM
+    GM --> GT
+    GM --> PC
+    GM --> UIA
+    GM --> DC
+    PC --> PD
+    P --> AS
+    AS --> BO
+    DC --> DA
+    DC --> DR
+    SH --> GM
+    CF --> P
+    PS --> GM
+    GO2 --> GM
+```
+
 ### Game System and Progression
 
 | Component | Purpose | Key Responsibilities |
