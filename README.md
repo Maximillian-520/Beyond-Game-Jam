@@ -2,7 +2,7 @@
 
 <p align="justify">A chaotic survival and chores game where you must stay alive in a flying-and-falling-object nightmare while doing chores. The game blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between escaping incoming threats and completing household tasks.</p>
 
-## Overview
+## Overview 🌐
 
 This project is primarily organized through these corresponding folder roots:
 
@@ -12,7 +12,7 @@ This project is primarily organized through these corresponding folder roots:
 - `Assets/UI` contains menu screens, HUD, win/lose flows, and UI animation handling.
 - `Assets/Scenes` contains the main menu and gameplay scenes.
 
-## Key Features
+## Key Features ✨
 
 ### 1. Survival Phase
 The main gameplay loop is a survival section where the player is active and must avoid incoming attack objects. The phase uses:
@@ -43,7 +43,7 @@ Each difficulty selects a different `ProgressionData` asset, which controls:
 - Chore break interval range
 - Spawn timing ranges for each progression level
 
-## Main Modules and Components
+## Main Modules and Components 🧩
 
 ```mermaid
 flowchart LR
@@ -139,7 +139,7 @@ flowchart LR
 | `GameoverScreenController` | End-state screen handling | Displays win/lose screens after a run ends |
 | `UIAnimationController` | UI animation sequence orchestrator | Runs intro, chore break, win, and lose animations |
 
-## Gameplay Flow
+## Gameplay Flow 🎮
 
 ```mermaid
 flowchart TD
@@ -172,6 +172,6 @@ flowchart TD
 
 <p align="justify">The flow above summarizes the main loop of the game: start from the menu, enter survival, trigger chore breaks at intervals, increase difficulty through progression, and end the run with a win or loss state.</p>
 
-## Additional Info
+## Additional Info 📝
 <p align="justify">This project was made by myself using both photographed real-life things and free online assets. This game was submitted to Beyond Game Jam 2026: BiasBreaker.</p>
 Game page: <a href="https://maximillian520.itch.io/household-chaos-and-chores">itch.io</a>
