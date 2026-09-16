@@ -1,16 +1,32 @@
 <h1 align="center">🏃 Household Chaos and Chores 🍽️</h1>
 
-<p align="justify">A chaotic survival and chores game where you must stay alive in a flying-and-falling-object nightmare while doing chores. The game blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between escaping incoming threats and completing household tasks.</p>
-
 ## Overview 🌐
 
-This project is primarily organized through these corresponding folder roots:
+<p align="justify">A chaotic survival and chores game where you must stay alive in a flying-and-falling-object nightmare while doing chores. The game blends fast-paced survival gameplay with a short dish-washing minigame, where the player alternates between escaping incoming threats and completing household tasks.</p>
 
-- `Assets/Game Object` contains the player, enemies/attack objects, and the character state system.
-- `Assets/Game System` handles the core game loop, progression, timers, and flow control.
-- `Assets/Common` contains reusable systems such as audio, saving, camera, and settings.
-- `Assets/UI` contains menu screens, HUD, win/lose flows, and UI animation handling.
-- `Assets/Scenes` contains the main menu and gameplay scenes.
+<table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse;">
+    <tr>
+        <td width="50%" style="border: none;"><img src="readme/game_gif_1.gif" alt="game_gif_1" width="100%" /></td>
+        <td width="50%" style="border: none;"><img src="readme/game_gif_2.gif" alt="game_gif_2" width="100%" /></td>
+    </tr>
+    <tr>
+        <td width="50%" style="border: none;"><img src="readme/game_gif_3.gif" alt="game_gif_3" width="100%" /></td>
+        <td width="50%" style="border: none;"><img src="readme/game_gif_4.gif" alt="game_gif_4" width="100%" /></td>
+    </tr>
+</table>
+
+<p align="justify">This project was made by myself using both photographed real-life things and free online assets.</p>
+
+<table border="0" cellpadding="6" cellspacing="0" style="border: none; border-collapse: collapse; width: 100%;">
+    <tr>
+        <td width="25%" style="border: none; padding: 4px; text-align: center;"><img src="readme/source_picture_1.jpg" alt="source_picture_1" width="100%" /></td>
+        <td width="25%" style="border: none; padding: 4px; text-align: center;"><img src="readme/source_picture_2.jpg" alt="source_picture_2" width="100%" /></td>
+        <td width="25%" style="border: none; padding: 4px; text-align: center;"><img src="readme/source_picture_3.jpg" alt="source_picture_3" width="100%" /></td>
+        <td width="25%" style="border: none; padding: 4px; text-align: center;"><img src="readme/source_picture_4.jpg" alt="source_picture_4" width="100%" /></td>
+    </tr>
+</table>
+
+### Time spent: 7 Days 📅 / 56 Work Hours ⌛
 
 ## Key Features ✨
 
@@ -44,6 +60,13 @@ Each difficulty selects a different `ProgressionData` asset, which controls:
 - Spawn timing ranges for each progression level
 
 ## Main Modules and Components 🧩
+
+This project is primarily organized through these corresponding folder roots:
+- `Assets/Game Object` contains the player, enemies/attack objects, and the character state system.
+- `Assets/Game System` handles the core game loop, progression, timers, and flow control.
+- `Assets/Common` contains reusable systems such as audio, saving, camera, and settings.
+- `Assets/UI` contains menu screens, HUD, win/lose flows, and UI animation handling.
+- `Assets/Scenes` contains the main menu and gameplay scenes.
 
 ```mermaid
 flowchart LR
@@ -173,5 +196,5 @@ flowchart TD
 <p align="justify">The flow above summarizes the main loop of the game: start from the menu, enter survival, trigger chore breaks at intervals, increase difficulty through progression, and end the run with a win or loss state.</p>
 
 ## Additional Info 📝
-<p align="justify">This project was made by myself using both photographed real-life things and free online assets. This game was submitted to Beyond Game Jam 2026: BiasBreaker.</p>
+This game was submitted to Beyond Game Jam 2026: BiasBreaker.<br>
 Game page: <a href="https://maximillian520.itch.io/household-chaos-and-chores">itch.io</a>
